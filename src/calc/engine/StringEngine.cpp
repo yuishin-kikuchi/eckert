@@ -74,6 +74,9 @@ void StringEngine::init() {
 // Nov 16, 2016
 //====--------------------------------------------------------------------==////
 std::string StringEngine::floatToStandardString(const floating_t &val, const int &p) {
+	if (p < 1) {
+		return "PRECISION ERROR";
+	}
 	std::ostringstream os;
 	os << std::uppercase;
 	os.precision(p);
@@ -91,6 +94,9 @@ std::string StringEngine::floatToStandardString(const floating_t &val, const int
 // Nov 16, 2016
 //====--------------------------------------------------------------------==////
 std::string StringEngine::floatToFixedString(const floating_t &val, const int &p) {
+	if (p < 0) {
+		return "PRECISION ERROR";
+	}
 	int cprec = std::numeric_limits<floating_t>::digits10;
 	std::ostringstream os;
 	floating_t num = val;
@@ -128,10 +134,13 @@ std::string StringEngine::floatToFixedString(const floating_t &val, const int &p
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / FLOAT TO STRING (SCIENTIFIC)
 // [ Update ]
-// Nov 16, 2016
+// Dec 14, 2016
 //====--------------------------------------------------------------------==////
 std::string StringEngine::floatToScientificString(const floating_t &val, const int &p) {
-	// int cprec = std::numeric_limits<floating_t>::digits10;
+	if (p < 1) {
+		return "PRECISION ERROR";
+	}
+	//const int cprec = std::numeric_limits<floating_t>::digits10;
 	std::ostringstream os;
 	os << std::uppercase;
 	floating_t num = val;
@@ -148,23 +157,15 @@ std::string StringEngine::floatToScientificString(const floating_t &val, const i
 	}
 	int decimalExponent = (int)std::floor(std::log10(num));
 	floating_t mantissa = num;
-	if (0 != decimalExponent) {
-		mantissa /= pow10(decimalExponent);
-	}
-	if (std::abs(10.0L - mantissa) < std::numeric_limits<floating_t>::epsilon() * 100.0L) {
-		mantissa /= 10.0;
+	mantissa /= pow10(decimalExponent - p + 1);
+	mantissa = std::round(mantissa) / pow10(p - 1);
+	if (std::abs(10.0L - mantissa) < pow10(-p - 2)) {
+		mantissa /= 10.0L;
 		decimalExponent++;
 	}
-	if (p > 1) {
-		os << std::fixed;
-		os.precision(p - 1);
-		os << mantissa;
-	}
-	else {
-		os << std::fixed;
-		os.precision(0);
-		os << mantissa;
-	}
+	os << std::fixed;
+	os.precision(p - 1);
+	os << mantissa;
 	if (decimalExponent > -1) {
 		os << "E+" << std::setfill('0') << std::setw(2) << decimalExponent;
 	}
@@ -177,9 +178,12 @@ std::string StringEngine::floatToScientificString(const floating_t &val, const i
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / FLOAT TO STRING (ENGINEERING)
 // [ Update ]
-// Dec 04, 2016
+// Dec 14, 2016
 //====--------------------------------------------------------------------==////
 std::string StringEngine::floatToEngineeringString(const floating_t &val, const int &p) {
+	if (p < 1) {
+		return "PRECISION ERROR";
+	}
 	std::ostringstream os;
 	os << std::uppercase;
 	floating_t num = val;
@@ -195,79 +199,92 @@ std::string StringEngine::floatToEngineeringString(const floating_t &val, const 
 		os << '-';
 	}
 	int decimalExponent = (int)std::floor(std::log10(num));
+	floating_t mantissa = num;
+	mantissa /= pow10(decimalExponent - p + 1);
+	mantissa = std::round(mantissa) / pow10(p - 1);
+	if (std::abs(10.0L - mantissa) < pow10(-p - 2)) {
+		mantissa /= 10.0L;
+		decimalExponent++;
+	}
 	int eex = 0;
+	int rem = 0;
 	if (0 != decimalExponent) {
-		floating_t temp = num / pow10(decimalExponent);
-		if (std::abs(10.0L - temp) < std::numeric_limits<floating_t>::epsilon() * 100.0L) {
-			// mantissa /= 10.0;
-			decimalExponent++;
+		rem = decimalExponent % 3;
+		if (rem < 0) {
+			rem += 3;
 		}
 	}
-	if (decimalExponent > -1) {
-		int rem = decimalExponent % 3;
-		eex = decimalExponent - rem;
-	}
-	else {
-		eex = -(3 * ((2 + -decimalExponent) / 3));
-	}
-	floating_t mantissa = num / pow10(eex);
+	eex = decimalExponent - rem;
+	mantissa = mantissa * pow10(rem);
 	switch (p) {
 		case 1: {
-			floating_t temp = mantissa + std::numeric_limits<floating_t>::epsilon() * 100.0L;
-			if (temp >= 100.0L) {
-				mantissa = ::round(mantissa / 100.0L) * 100.0L;
-			}
-			else if (temp >= 10.0L) {
-				mantissa = ::round(mantissa / 10.0L) * 10.0L;
-			}
-			else {
-				mantissa = ::round(mantissa);
+			switch (rem) {
+				case 2:
+					mantissa = ::round(mantissa / 100.0L) * 100.0L;
+					break;
+				case 1:
+					mantissa = ::round(mantissa / 10.0L) * 10.0L;
+					break;
+				case 0:
+					mantissa = ::round(mantissa);
+					break;
+				default:
+					break;
 			}
 			os << mantissa;
 			break;
 		}
 		case 2: {
-			floating_t temp = mantissa + std::numeric_limits<floating_t>::epsilon() * 100.0L;
-			if (temp >= 100.0L) {
-				mantissa = ::round(mantissa / 10.0L) * 10.0L;
-			}
-			else if (temp >= 10.0L) {
-				mantissa = ::round(mantissa);
-			}
-			else {
-				mantissa = ::round(mantissa * 10.0L) / 10.0L;
-				os << std::fixed << std::setprecision(1);
+			switch (rem) {
+				case 2:
+					mantissa = ::round(mantissa / 10.0L) * 10.0L;
+					break;
+				case 1:
+					mantissa = ::round(mantissa);
+					break;
+				case 0:
+					mantissa = ::round(mantissa * 10.0L) / 10.0L;
+					os << std::fixed << std::setprecision(1);
+					break;
+				default:
+					break;
 			}
 			os << mantissa;
 			break;
 		}
 		case 3: {
-			floating_t temp = mantissa + std::numeric_limits<floating_t>::epsilon() * 100.0L;
-			if (temp >= 100.0L) {
-				mantissa = ::round(mantissa);
-				os << std::fixed << std::setprecision(0);
-			}
-			else if (temp >= 10.0L) {
-				mantissa = ::round(mantissa * 10.0L) / 10.0L;
-				os << std::fixed << std::setprecision(1);
-			}
-			else {
-				mantissa = ::round(mantissa * 100.0L) / 100.0L;
-				os << std::fixed << std::setprecision(2);
+			switch (rem) {
+				case 2:
+					mantissa = ::round(mantissa);
+					os << std::fixed << std::setprecision(0);
+					break;
+				case 1:
+					mantissa = ::round(mantissa * 10.0L) / 10.0L;
+					os << std::fixed << std::setprecision(1);
+					break;
+				case 0:
+					mantissa = ::round(mantissa * 100.0L) / 100.0L;
+					os << std::fixed << std::setprecision(2);
+					break;
+				default:
+					break;
 			}
 			os << mantissa;
 			break;
 		}
 		default: {
-			floating_t temp = mantissa + std::numeric_limits<floating_t>::epsilon() * 100.0L;
-			if (temp >= 100.0L) {
-				os.precision(p - 3);
-			}
-			else if (temp >= 10.0L) {
-				os.precision(p - 2);
-			}
-			else {
-				os.precision(p - 1);
+			switch (rem) {
+				case 2:
+					os.precision(p - 3);
+					break;
+				case 1:
+					os.precision(p - 2);
+					break;
+				case 0:
+					os.precision(p - 1);
+					break;
+				default:
+					break;
 			}
 			os << std::fixed;
 			os << mantissa;

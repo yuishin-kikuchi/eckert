@@ -25,7 +25,7 @@
 ////==--------------------------------------------------------------------====//
 // ENGINEERING CALCULATOR
 // [ Update ]
-// Nov 22, 2016
+// Dec 12, 2016
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -199,7 +199,7 @@ void EngineeringCalculator::init() {
 	addOperator("pico", StackOperatorPtr(new PicoOperator()));
 	addOperator("nano", StackOperatorPtr(new NanoOperator()));
 	addOperator("micro", StackOperatorPtr(new MicroOperator()));
-	addOperator("milli", StackOperatorPtr(new MicroOperator()));
+	addOperator("milli", StackOperatorPtr(new MilliOperator()));
 	addOperator("centi", StackOperatorPtr(new CentiOperator()));
 	addOperator("deci", StackOperatorPtr(new DeciOperator()));
 	addOperator("deca", StackOperatorPtr(new DecaOperator()));

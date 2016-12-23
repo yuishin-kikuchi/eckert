@@ -12,10 +12,13 @@ EckertStates::EckertStates() {
 ////==--------------------------------------------------------------------====//
 // ECKERT STATES / INITIALIZER
 // [ Update ]
-// Feb 02, 2016
+// Dec 22, 2016
 //====--------------------------------------------------------------------==////
 void EckertStates::init() {
-	_waiting = WaitingState::NONE;
+	resetWaitingState();
+	resetPrevUnits();
+	resetUnits();
+	startRec();
 }
 
 ////==--------------------------------------------------------------------====//

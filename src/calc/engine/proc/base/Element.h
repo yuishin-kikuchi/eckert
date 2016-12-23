@@ -16,26 +16,26 @@ class Element : public BaseElement {
 	public:
 		enum : unsigned int {
 			// KIND
+			SCALAR_TYPE  = 16,  // 0b 0001 0000
 			NUMERIC_TYPE = 32,  // 0b 0010 0000
-			SCALAR_TYPE  = 48,  // 0b 0011 0000
 			BINARY_TYPE  = 64,  // 0b 0100 0000
 			SET_TYPE     = 128, // 0b 1000 0000
 			// TYPE
-			ERROR        = 0,
-			ESTRING      = 1,
-			EINFINITY    = 2,
-			UINTEGER     = 3,
-			INTEGER      = 0 | SCALAR_TYPE,
-			FLOATING     = 1 | SCALAR_TYPE,
-			RATIONAL     = 2 | SCALAR_TYPE,
-			COMPLEX      = 0 | NUMERIC_TYPE,
-			ETUPLE       = 0 | SET_TYPE,
-			MATRIX       = 1 | SET_TYPE,
-			BOOLEAN      = 0 | BINARY_TYPE,
-			BINARY8      = 1 | BINARY_TYPE,
-			BINARY16     = 2 | BINARY_TYPE,
-			BINARY32     = 3 | BINARY_TYPE,
-			BINARY64     = 4 | BINARY_TYPE,
+			ERROR        = 1,
+			ESTRING      = 2,
+			EINFINITY    = 3,
+			UINTEGER     = 4,
+			INTEGER      = NUMERIC_TYPE | SCALAR_TYPE | 1,
+			FLOATING     = NUMERIC_TYPE | SCALAR_TYPE | 2,
+			RATIONAL     = NUMERIC_TYPE | SCALAR_TYPE | 3,
+			COMPLEX      = NUMERIC_TYPE | 1,
+			BOOLEAN      = BINARY_TYPE  | 1,
+			BINARY8      = BINARY_TYPE  | 2,
+			BINARY16     = BINARY_TYPE  | 3,
+			BINARY32     = BINARY_TYPE  | 4,
+			BINARY64     = BINARY_TYPE  | 5,
+			ETUPLE       = SET_TYPE     | 1,
+			MATRIX       = SET_TYPE     | 2,
 		};
 	public:
 		virtual unsigned int getType() const = 0;

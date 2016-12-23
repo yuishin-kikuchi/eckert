@@ -3,6 +3,7 @@
 #include "engine/EckertConstants.h"
 #include "util/StringChecker.h"
 #include "ncheck/StringConverter.h"
+#include "engine/proc/base/math/floatToRational.h"
 
 ////==--------------------------------------------------------------------====//
 // ECKERT PARSER / CONSTRUCTOR
@@ -301,7 +302,7 @@ EckertParser::genSpElementString(
 ////==--------------------------------------------------------------------====//
 // ECKERT PARSER / GENERATE NUMERIC ELEMENT FROM STRING
 // [ Update ]
-// Dec 03, 2016
+// Dec 20, 2016
 //====--------------------------------------------------------------------==////
 EckertParser::ReturnCode
 EckertParser::genSpElementNumeric(

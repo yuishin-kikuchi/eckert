@@ -17,6 +17,7 @@
 #include "OperatorsRandom.h"
 #include "OperatorsStack.h"
 #include "OperatorsStats.h"
+#include "OperatorsTime.h"
 #include "OperatorsTrigonometric.h"
 #include "OperatorsTuple.h"
 
@@ -44,6 +45,8 @@ void EngineeringCalculator::init() {
 	reg.resize(26); // alphabet
 	resetOperators();
 	// angle conversion
+	addOperator("todms", StackOperatorPtr(new ToDmsOperator()));
+	addOperator("dmsto", StackOperatorPtr(new DmsToOperator()));
 	addOperator("rtod", StackOperatorPtr(new RadianToDegreeOperator()));
 	addOperator("rtog", StackOperatorPtr(new RadianToGradeOperator()));
 	addOperator("dtor", StackOperatorPtr(new DegreeToRadianOperator()));
@@ -174,6 +177,9 @@ void EngineeringCalculator::init() {
 	// matrix
 	addOperator("mkmat", StackOperatorPtr(new MakeMatrixOperator()));
 	addOperator("mkumat", StackOperatorPtr(new MakeUnitMatrixOperator()));
+	addOperator("mget", StackOperatorPtr(new GetElementFromMatrixOperator()));
+	addOperator("mgetr", StackOperatorPtr(new GetRowFromMatrixOperator()));
+	addOperator("mgetc", StackOperatorPtr(new GetColumnFromMatrixOperator()));
 	addOperator("trans", StackOperatorPtr(new TransposeOperator()));
 	addOperator("htrans", StackOperatorPtr(new HermitianTransposeOperator()));
 	addOperator("hconj", StackOperatorPtr(new HermitianTransposeOperator()));
@@ -220,6 +226,34 @@ void EngineeringCalculator::init() {
 	addOperator("exbi", StackOperatorPtr(new ExbiOperator()));
 	addOperator("zebi", StackOperatorPtr(new ZebiOperator()));
 	addOperator("yobi", StackOperatorPtr(new YobiOperator()));
+	addOperator("toyocto", StackOperatorPtr(new ToYoctoOperator()));
+	addOperator("tozepto", StackOperatorPtr(new ToZeptoOperator()));
+	addOperator("toatto", StackOperatorPtr(new ToAttoOperator()));
+	addOperator("tofemto", StackOperatorPtr(new ToFemtoOperator()));
+	addOperator("topico", StackOperatorPtr(new ToPicoOperator()));
+	addOperator("tonano", StackOperatorPtr(new ToNanoOperator()));
+	addOperator("tomicro", StackOperatorPtr(new ToMicroOperator()));
+	addOperator("tomilli", StackOperatorPtr(new ToMilliOperator()));
+	addOperator("tocenti", StackOperatorPtr(new ToCentiOperator()));
+	addOperator("todeci", StackOperatorPtr(new ToDeciOperator()));
+	addOperator("todeca", StackOperatorPtr(new ToDecaOperator()));
+	addOperator("tohecto", StackOperatorPtr(new ToHectoOperator()));
+	addOperator("tokilo", StackOperatorPtr(new ToKiloOperator()));
+	addOperator("tomega", StackOperatorPtr(new ToMegaOperator()));
+	addOperator("togiga", StackOperatorPtr(new ToGigaOperator()));
+	addOperator("totera", StackOperatorPtr(new ToTeraOperator()));
+	addOperator("topeta", StackOperatorPtr(new ToPetaOperator()));
+	addOperator("toexa", StackOperatorPtr(new ToExaOperator()));
+	addOperator("tozetta", StackOperatorPtr(new ToZettaOperator()));
+	addOperator("toyotta", StackOperatorPtr(new ToYottaOperator()));
+	addOperator("tokibi", StackOperatorPtr(new ToKibiOperator()));
+	addOperator("tomebi", StackOperatorPtr(new ToMebiOperator()));
+	addOperator("togibi", StackOperatorPtr(new ToGibiOperator()));
+	addOperator("totebi", StackOperatorPtr(new ToTebiOperator()));
+	addOperator("topebi", StackOperatorPtr(new ToPebiOperator()));
+	addOperator("toexbi", StackOperatorPtr(new ToExbiOperator()));
+	addOperator("tozebi", StackOperatorPtr(new ToZebiOperator()));
+	addOperator("toyobi", StackOperatorPtr(new ToYobiOperator()));
 	// random
 	RandomOperator::init();
 	addOperator("rand", StackOperatorPtr(new RandomIntegerOperator()));
@@ -240,7 +274,7 @@ void EngineeringCalculator::init() {
 	addOperator("rolld", StackOperatorPtr(new RolldOperator()));
 	addOperator("pick", StackOperatorPtr(new PickOperator()));
 	addOperator("unpick", StackOperatorPtr(new UnpickOperator()));
-	addOperator("pick3", StackOperatorPtr(new Pick3Operator()));
+	//addOperator("pick3", StackOperatorPtr(new Pick3Operator()));
 	addOperator("depth", StackOperatorPtr(new StackDepthOperator()));
 	addOperator("dup2", StackOperatorPtr(new Dup2Operator()));
 	addOperator("xy", StackOperatorPtr(new Dup2Operator()));
@@ -248,6 +282,8 @@ void EngineeringCalculator::init() {
 	addOperator("dupn", StackOperatorPtr(new DupnOperator()));
 	addOperator("drop2", StackOperatorPtr(new Drop2Operator()));
 	addOperator("\\\\", StackOperatorPtr(new Drop2Operator()));
+	addOperator("drop3", StackOperatorPtr(new Drop3Operator()));
+	addOperator("\\\\\\", StackOperatorPtr(new Drop3Operator()));
 	addOperator("dropn", StackOperatorPtr(new DropnOperator()));
 	addOperator("dupdup", StackOperatorPtr(new DupDupOperator()));
 	addOperator("dd", StackOperatorPtr(new DupDupOperator()));
@@ -283,6 +319,27 @@ void EngineeringCalculator::init() {
 	addOperator("alland", StackOperatorPtr(new AllAndOperator()));
 	addOperator("allor", StackOperatorPtr(new AllOrOperator()));
 	addOperator("allxor", StackOperatorPtr(new AllXorOperator()));
+	// time conversion
+	addOperator("stom", StackOperatorPtr(new SecToMinOperator()));
+	addOperator("stoh", StackOperatorPtr(new SecToHourOperator()));
+	addOperator("stod", StackOperatorPtr(new SecToDayOperator()));
+	addOperator("stow", StackOperatorPtr(new SecToWeekOperator()));
+	addOperator("mtos", StackOperatorPtr(new MinToSecOperator()));
+	addOperator("mtoh", StackOperatorPtr(new MinToHourOperator()));
+	addOperator("mtod", StackOperatorPtr(new MinToDayOperator()));
+	addOperator("mtow", StackOperatorPtr(new MinToWeekOperator()));
+	addOperator("htos", StackOperatorPtr(new HourToSecOperator()));
+	addOperator("htom", StackOperatorPtr(new HourToMinOperator()));
+	addOperator("htod", StackOperatorPtr(new HourToDayOperator()));
+	addOperator("htow", StackOperatorPtr(new HourToWeekOperator()));
+	addOperator("dtos", StackOperatorPtr(new DayToSecOperator()));
+	addOperator("dtom", StackOperatorPtr(new DayToMinOperator()));
+	addOperator("dtoh", StackOperatorPtr(new DayToHourOperator()));
+	addOperator("dtow", StackOperatorPtr(new DayToWeekOperator()));
+	addOperator("wtos", StackOperatorPtr(new WeekToSecOperator()));
+	addOperator("wtom", StackOperatorPtr(new WeekToMinOperator()));
+	addOperator("wtoh", StackOperatorPtr(new WeekToHourOperator()));
+	addOperator("wtod", StackOperatorPtr(new WeekToDayOperator()));
 	// trigonometric
 	addOperator("sinr", StackOperatorPtr(new SinRadianOperator()));
 	addOperator("cosr", StackOperatorPtr(new CosRadianOperator()));
@@ -307,6 +364,7 @@ void EngineeringCalculator::init() {
 	addOperator("mctup", StackOperatorPtr(new MakeColumnTupleOperator()));
 	addOperator("mrutup", StackOperatorPtr(new MakeRowUnitTupleOperator()));
 	addOperator("mcutup", StackOperatorPtr(new MakeColumnUnitTupleOperator()));
+	addOperator("tget", StackOperatorPtr(new GetFromTupleOperator()));
 	addOperator("inner", StackOperatorPtr(new InnerProductOperator()));
 	addOperator("dot", StackOperatorPtr(new InnerProductOperator()));
 	addOperator("outer", StackOperatorPtr(new OuterProductOperator()));

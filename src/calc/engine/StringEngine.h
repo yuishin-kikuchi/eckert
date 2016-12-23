@@ -27,7 +27,12 @@ class StringEngine {
 			LONG,
 			SHORT,
 		};
-		enum class RationalDisplayMode : int {
+		enum class DecimalDisplayMode : int {
+			AUTO_DECIMAL,
+			FORCE_DECIMAL,
+			FORCE_FRACTIONAL,
+		};
+		enum class FractionalDisplayMode : int {
 			PROVISIONAL,
 			MIXED,
 		};
@@ -40,11 +45,12 @@ class StringEngine {
 		};
 	private:
 		TypeDisplayMode _tdisp;
-		RationalDisplayMode _rdisp;
+		DecimalDisplayMode _ddisp;
+		FractionalDisplayMode _frdisp;
 		NumberBaseMode _nbase;
 		FloatingDisplayConfig _fcfg;
-		mutable bool _apx;
 		mutable bool _euler;
+		std::string complexArgumentToString(const CalculationConfig &cfg, const SpElement &elm) const;
 		std::string errorToString(const CalculationConfig &cfg, const SpElement &elm) const;
 		std::string estringToString(const CalculationConfig &cfg, const SpElement &elm) const;
 		std::string integerToString(const CalculationConfig &cfg, const SpElement &elm) const;
@@ -80,8 +86,11 @@ class StringEngine {
 		NumberBaseMode getNumberBaseMode() const {
 			return _nbase;
 		}
-		RationalDisplayMode getRationalDisplayMode() const {
-			return _rdisp;
+		DecimalDisplayMode getDecimalDisplayMode() const {
+			return _ddisp;
+		}
+		FractionalDisplayMode getFractionalDisplayMode() const {
+			return _frdisp;
 		}
 		FloatingDisplayConfig getFloatingDisplayConfig() const {
 			return _fcfg;
@@ -89,8 +98,11 @@ class StringEngine {
 		void setTypeDisplayMode(const TypeDisplayMode &mode) {
 			_tdisp = mode;
 		}
-		void setRationalDisplayMode(const RationalDisplayMode &mode) {
-			_rdisp = mode;
+		void setDecimalDisplayMode(const DecimalDisplayMode &mode) {
+			_ddisp = mode;
+		}
+		void setFractionalDisplayMode(const FractionalDisplayMode &mode) {
+			_frdisp = mode;
 		}
 		void setNumberBaseMode(const NumberBaseMode &mode) {
 			_nbase = mode;
@@ -104,14 +116,8 @@ class StringEngine {
 		const FloatingDisplayConfig& refFloatingDisplayConfig() const {
 			return _fcfg;
 		}
-		void setApproxFlag(const bool &flag) {
-			_apx = flag;
-		}
 		void setEulerFlag(const bool &flag) {
 			_euler = flag;
-		}
-		bool getApproxFlag() const {
-			return _apx;
 		}
 		bool getEulerFlag() const {
 			return _euler;

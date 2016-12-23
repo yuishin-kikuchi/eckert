@@ -90,7 +90,7 @@ SpElement GeneralProcessor::conj(const SpElement &p_ex) {
 // [ description ]
 // Get complex argument (radian)
 // [ Update ]
-// Jun 12, 2016
+// Dec 21, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::argRadian(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -114,7 +114,7 @@ SpElement GeneralProcessor::argRadian(const SpElement &p_ex) {
 			//== a == 0 and b > 0 then PI/2 ==//
 			p_etemp = pi_2();
 		}
-		else if (isZero(a) && neg(b)) {
+		else if (isZero(a) && isNegative(b)) {
 			//== a == 0 and b < 0 then -PI/2 ==//
 			p_etemp = neg(pi_2());
 		}
@@ -157,7 +157,7 @@ SpElement GeneralProcessor::argRadian(const SpElement &p_ex) {
 // [ description ]
 // Get complex argument (degree)
 // [ Update ]
-// Jan 27, 2016
+// Dec 21, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::argDegree(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -181,7 +181,7 @@ SpElement GeneralProcessor::argDegree(const SpElement &p_ex) {
 			//== a == 0 and b > 0 then 90 ==//
 			setInteger(p_etemp, +90);
 		}
-		else if (isZero(a) && neg(b)) {
+		else if (isZero(a) && isNegative(b)) {
 			//== a == 0 and b < 0 then -90 ==//
 			setInteger(p_etemp, -90);
 		}
@@ -224,7 +224,7 @@ SpElement GeneralProcessor::argDegree(const SpElement &p_ex) {
 // [ description ]
 // Get complex argument (grade)
 // [ Update ]
-// Jan 27, 2016
+// Dec 21, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::argGrade(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -248,7 +248,7 @@ SpElement GeneralProcessor::argGrade(const SpElement &p_ex) {
 			//== a == 0 and b > 0 then 100 ==//
 			setInteger(p_etemp, +100);
 		}
-		else if (isZero(a) && neg(b)) {
+		else if (isZero(a) && isNegative(b)) {
 			//== a == 0 and b < 0 then -100 ==//
 			setInteger(p_etemp, -100);
 		}

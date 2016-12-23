@@ -8,7 +8,7 @@
 ////==--------------------------------------------------------------------====//
 // ECKERT GENERAL PROCESSOR
 // [ Update ]
-// Nov 14, 2016
+// Dec 21, 2016
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -79,6 +79,8 @@ class GeneralProcessor : public EckertProcessor {
 		void setComplex(SpElement &rp_set, const SpElement &re, const SpElement &im);
 		//==  Value checker  ==//
 		bool isZero(const SpElement &p_ex);
+		bool isPositiveZero(const SpElement &p_ex);
+		bool isNegativeZero(const SpElement &p_ex);
 		bool isPositive(const SpElement &p_ex);
 		bool isNegative(const SpElement &p_ex);
 		bool isInEpsilonInverse(const SpElement &p_ex);

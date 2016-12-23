@@ -204,8 +204,8 @@ class MakeColumnUnitTupleOperator : public GeneralOperator {
 							stack.push(GEN_ETUPLE2(tuple, ETuple::TupleType::COLUMN));
 						}
 						else {
-						stackEngine.setErrorMessage("BAD_RNG");
-						return true;
+							stackEngine.setErrorMessage("BAD_RNG");
+							return true;
 						}
 					}
 					else {
@@ -228,6 +228,44 @@ class MakeColumnUnitTupleOperator : public GeneralOperator {
 		}
 };
 
+class GetFromTupleOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TGET");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				if (p_ey->isType(Element::ETUPLE) && p_ex->isType(Element::INTEGER)) {
+					integer_t tuple_size = (integer_t)GET_ETUPLE_SIZE(p_ey);
+					integer_t position = GET_INTEGER_DATA(p_ex);
+					if ((0 < position) && (position <= tuple_size)) {
+						SpElement elm = GET_ETUPLE_DATA(p_ey, (std::size_t)position - 1);
+						stack.drop(2);
+						stack.push(elm);
+					}
+					else {
+						stackEngine.setErrorMessage("BAD_RNG");
+						return true;
+					}
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
+		}
+};
 
 class InnerProductOperator : public GeneralOperator {
 	public:

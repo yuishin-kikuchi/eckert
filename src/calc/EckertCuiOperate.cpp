@@ -4,6 +4,7 @@
 #include "util/StringChecker.h"
 #include "engine/JsonOut.h"
 #include "engine/OperatorsRegister.h"
+#include "engine/UnitConverter.h"
 #include <cstdio>
 
 #include <iostream>
@@ -11,20 +12,35 @@
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE
 // [ Update ]
-// Feb 16, 2016
+// Dec 23, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::operate(const std::string &str)
 try {
 	switch (getOperationMode()) {
-		case OperationMode::VERSION_FROM_CONFIG:
+		case OperationMode::VERSION_FROM_CONFIG: {
+			auto &stackEngine = _engCalc.refStackEngine();
+			_stat.resetWaitingState();
+			stackEngine.setCommandMessage("CF_NOP");
+			stackEngine.setErrorMessage("NO_ERROR");
 			setOperationMode(OperationMode::CONFIG);
 			return;
-		case OperationMode::VERSION_FROM_CALCULATOR:
+		}
+		case OperationMode::VERSION_FROM_CALCULATOR: {
+			auto &stackEngine = _engCalc.refStackEngine();
+			_stat.resetWaitingState();
+			stackEngine.setCommandMessage("H_NOP");
+			stackEngine.setErrorMessage("NO_ERROR");
 			setOperationMode(OperationMode::CALCULATOR);
 			return;
-		case OperationMode::VIEW:
+		}
+		case OperationMode::VIEW: {
+			auto &stackEngine = _engCalc.refStackEngine();
+			_stat.resetWaitingState();
+			stackEngine.setCommandMessage("H_NOP");
+			stackEngine.setErrorMessage("NO_ERROR");
 			setOperationMode(OperationMode::CALCULATOR);
 			return;
+		}
 		default:
 			break;
 	}
@@ -38,6 +54,7 @@ try {
 		}
 		else if (StringChecker::isHomura(token)) {
 			auto &stackEngine = _engCalc.refStackEngine();
+			_stat.resetWaitingState();
 			stackEngine.setCommandMessage("H_NOP");
 			stackEngine.setErrorMessage("NO_ERROR");
 			setOperationMode(OperationMode::CALCULATOR);
@@ -45,6 +62,7 @@ try {
 		}
 		else if (StringChecker::isConfig(token)) {
 			auto &stackEngine = _engCalc.refStackEngine();
+			_stat.resetWaitingState();
 			stackEngine.setCommandMessage("CF_NOP");
 			stackEngine.setErrorMessage("NO_ERROR");
 			setOperationMode(OperationMode::CONFIG);
@@ -53,16 +71,19 @@ try {
 		switch (getOperationMode()) {
 			case OperationMode::CALCULATOR:
 				if (StringChecker::isVersion(token)) {
+					_stat.resetWaitingState();
 					setOperationMode(OperationMode::VERSION_FROM_CALCULATOR);
 					return;
 				}
 				else if (StringChecker::isView(token)) {
+					_stat.resetWaitingState();
 					setOperationMode(OperationMode::VIEW);
 					return;
 				}
 				break;
 			case OperationMode::CONFIG:
 				if (StringChecker::isVersion(token)) {
+					_stat.resetWaitingState();
 					setOperationMode(OperationMode::VERSION_FROM_CONFIG);
 					return;
 				}
@@ -97,7 +118,7 @@ catch (...) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE CONFIG
 // [ Update ]
-// Feb 16, 2016
+// Dec 18, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::operateConfig(const std::string &str) {
 	auto &stackEngine = _engCalc.refStackEngine();
@@ -105,8 +126,8 @@ void EckertCui::operateConfig(const std::string &str) {
 	std::size_t size = tokens.size();
 	switch (size) {
 		case 0:
-			stackEngine.setCommandMessage("ERROR");
-			stackEngine.setErrorMessage("EMP_IN");
+			stackEngine.setCommandMessage("CF_NOP");
+			stackEngine.setErrorMessage("NO_ERROR");
 			_stat.resetWaitingState();
 			return;
 		case 1: {
@@ -149,7 +170,7 @@ void EckertCui::operateConfig(const std::string &str) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE CONFIG (vector)
 // [ Update ]
-// Feb 16, 2016
+// Dec 18, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::operateConfig(const std::vector<std::string> &tokens)
 try {
@@ -275,7 +296,7 @@ catch (...) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE CALCULATOR
 // [ Update ]
-// Feb 03, 2016
+// Dec 18, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::operateCalculator(const std::string &str) {
 	auto &stackEngine = _engCalc.refStackEngine();
@@ -346,6 +367,25 @@ try {
 		std::string lower_token = StringUtility::genLowerString(token);
 		//==  Start operation  ==//
 		_stat.startRec();
+		switch (operateUnitConversion(lower_token)) {
+			case ReturnCode::SUCCESS: {
+				bool is_waiting = (EckertStates::NONE != _stat.getWaitingState());
+				if (is_waiting) {
+					continue;
+				}
+				else {
+					operated = true;
+					continue;
+				}
+				break;
+			}
+			case ReturnCode::FAILURE:
+				goto LOOP_END;
+			case ReturnCode::NOT_FOUND:
+				break;
+			default:
+				break;
+		}
 		auto &fcfg = _strEngine.refFloatingDisplayConfig();
 		switch (_parser.manageConfig(stackEngine, fcfg, _stat, token)) {
 			case EckertParser::ReturnCode::SUCCESS: {
@@ -530,6 +570,130 @@ EckertCui::operateCalculatorOneKeyword(const std::string &token) {
 }
 
 ////==--------------------------------------------------------------------====//
+// ECKERT CUI / OPERATE UNIT CONVERSION
+// [ Update ]
+// Dec 22, 2016
+//====--------------------------------------------------------------------==////
+EckertCui::ReturnCode
+EckertCui::operateUnitConversion(const std::string &token) {
+	auto &stackEngine = _engCalc.refStackEngine();
+	auto state = _stat.getWaitingState();
+	switch (state) {
+		case EckertStates::NONE: {
+			if (!token.compare("conv") || !token.compare("cv")) {
+				stackEngine.setCommandMessage("H_CONV");
+				auto &exStack = stackEngine.refExStack();
+				if (exStack.empty()) {
+					stackEngine.setErrorMessage("FEW_ARG");
+					return ReturnCode::FAILURE;
+				}
+				else {
+					auto elm = exStack.fetch(0);
+					if (!elm->isKindOf(engine::Element::SCALAR_TYPE)) {
+						stackEngine.setErrorMessage("BAD_TYPE");
+						return ReturnCode::FAILURE;
+					}
+				}
+				stackEngine.setErrorMessage("UNIT");
+				_stat.setWaitingState(EckertStates::FIRST_UNIT);
+				return ReturnCode::SUCCESS;
+			}
+			else if (!token.compare("rec")) {
+				stackEngine.setCommandMessage("H_REC");
+				auto &exStack = stackEngine.refExStack();
+				if (exStack.empty()) {
+					stackEngine.setErrorMessage("FEW_ARG");
+					return ReturnCode::FAILURE;
+				}
+				else {
+					auto elm = exStack.fetch(0);
+					if (!elm->isKindOf(engine::Element::SCALAR_TYPE)) {
+						stackEngine.setErrorMessage("BAD_TYPE");
+						return ReturnCode::FAILURE;
+					}
+				}
+				auto fromUnit = _stat.getPrevFromUnit();
+				auto toUnit = _stat.getPrevToUnit();
+				if ((0 == fromUnit) || (0 == toUnit)) {
+					stackEngine.setErrorMessage("CNV_ERR");
+					return ReturnCode::FAILURE;
+				}
+				auto src = exStack.fetch(0);
+				engine::SpElement dest;
+				if (engine::UnitConverter::convert(dest, src, fromUnit, toUnit)) {
+					stackEngine.setErrorMessage("CNV_ERR");
+					return ReturnCode::FAILURE;
+				}
+				else {
+					exStack.drop(1);
+					exStack.push(dest);
+				}
+				return ReturnCode::SUCCESS;
+			}
+			break;
+		}
+		case EckertStates::FIRST_UNIT: {
+			const auto &unitKeywords = engine::UnitConverter::unitKeywords;
+			stackEngine.setCommandMessage("H_CONV");
+			if (unitKeywords.find(token) != unitKeywords.end()) {
+				_stat.setFromUnit(unitKeywords.at(token));
+				_stat.setWaitingState(EckertStates::SECOND_UNIT);
+				stackEngine.setErrorMessage("UNIT");
+				return ReturnCode::SUCCESS;
+			}
+			else {
+				stackEngine.setErrorMessage("INV_IN");
+				_stat.setWaitingState(EckertStates::NONE);
+				return ReturnCode::FAILURE;
+			}
+			break;
+		}
+		case EckertStates::SECOND_UNIT: {
+			const auto &unitKeywords = engine::UnitConverter::unitKeywords;
+			stackEngine.setCommandMessage("H_CONV");
+			_stat.setWaitingState(EckertStates::NONE);
+			if (unitKeywords.find(token) != unitKeywords.end()) {
+				_stat.setToUnit(unitKeywords.at(token));
+			}
+			else {
+				stackEngine.setErrorMessage("INV_IN");
+				return ReturnCode::FAILURE;
+			}
+			auto fromUnit = _stat.getFromUnit();
+			auto toUnit = _stat.getToUnit();
+			auto &exStack = stackEngine.refExStack();
+			if (exStack.empty()) {
+				stackEngine.setErrorMessage("FEW_ARG");
+				return ReturnCode::FAILURE;
+			}
+			else {
+				auto elm = exStack.fetch(0);
+				if (!elm->isKindOf(engine::Element::SCALAR_TYPE)) {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return ReturnCode::FAILURE;
+				}
+			}
+			auto src = exStack.fetch(0);
+			engine::SpElement dest;
+			if (engine::UnitConverter::convert(dest, src, fromUnit, toUnit)) {
+				stackEngine.setErrorMessage("CNV_ERR");
+				return ReturnCode::FAILURE;
+			}
+			else {
+				_stat.setPrevFromUnit(fromUnit);
+				_stat.setPrevToUnit(toUnit);
+				exStack.drop(1);
+				exStack.push(dest);
+			}
+			return ReturnCode::SUCCESS;
+		}
+		default:
+			break;
+	}
+	return ReturnCode::NOT_FOUND;
+}
+
+////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE GENERAL CALCULATION
 // [ Update ]
 // Dec 10, 2016
@@ -590,7 +754,7 @@ EckertCui::operateGeneralCalculation(const std::string &token) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE REGISTER
 // [ Update ]
-// Feb 03, 2016
+// Dec 18, 2016
 //====--------------------------------------------------------------------==////
 EckertCui::ReturnCode
 EckertCui::operateRegister(const std::string &token) {
@@ -686,7 +850,7 @@ EckertCui::operateRegister(const std::string &token) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / CHANGE CALCULATOR MODE
 // [ Update ]
-// Feb 03, 2016
+// Dec 18, 2016
 //====--------------------------------------------------------------------==////
 EckertCui::ReturnCode
 EckertCui::changeCalculatorMode(const std::string &token) {
@@ -694,7 +858,22 @@ EckertCui::changeCalculatorMode(const std::string &token) {
 	auto &stackEngine = _engCalc.refStackEngine();
 	//==  Try to change mode  ==//
 	stackEngine.setErrorMessage("NO_ERROR");
-	if (!token.compare("deg")) {
+	if (!token.compare("ad")) {
+		_strEngine.setDecimalDisplayMode(engine::StringEngine::DecimalDisplayMode::AUTO_DECIMAL);
+		stackEngine.setCommandMessage("M_AD");
+		return ReturnCode::SUCCESS;
+	}
+	else if (!token.compare("fd")) {
+		_strEngine.setDecimalDisplayMode(engine::StringEngine::DecimalDisplayMode::FORCE_DECIMAL);
+		stackEngine.setCommandMessage("M_FD");
+		return ReturnCode::SUCCESS;
+	}
+	else if (!token.compare("ff")) {
+		_strEngine.setDecimalDisplayMode(engine::StringEngine::DecimalDisplayMode::FORCE_FRACTIONAL);
+		stackEngine.setCommandMessage("M_FF");
+		return ReturnCode::SUCCESS;
+	}
+	else if (!token.compare("deg")) {
 		_cfg.setAngleMode(engine::CalculationConfig::AngleMode::DEGREE);
 		stackEngine.setCommandMessage("M_ADEG");
 		return ReturnCode::SUCCESS;
@@ -764,17 +943,6 @@ EckertCui::changeCalculatorMode(const std::string &token) {
 		}
 		return ReturnCode::SUCCESS;
 	}
-	else if (!token.compare("approx") || !token.compare("apx")) {
-		if (_strEngine.getApproxFlag()) {
-			_strEngine.setApproxFlag(false);
-			stackEngine.setCommandMessage("M_AOFF");
-		}
-		else {
-			_strEngine.setApproxFlag(true);
-			stackEngine.setCommandMessage("M_AON");
-		}
-		return ReturnCode::SUCCESS;
-	}
 	else if (!token.compare("euler") || !token.compare("eul")) {
 		if (_strEngine.getEulerFlag()) {
 			_strEngine.setEulerFlag(false);
@@ -787,13 +955,13 @@ EckertCui::changeCalculatorMode(const std::string &token) {
 		return ReturnCode::SUCCESS;
 	}
 	else if (!token.compare("fraction") || !token.compare("frac")) {
-		switch (_strEngine.getRationalDisplayMode()) {
-			case engine::StringEngine::RationalDisplayMode::MIXED:
-				_strEngine.setRationalDisplayMode(engine::StringEngine::RationalDisplayMode::PROVISIONAL);
+		switch (_strEngine.getFractionalDisplayMode()) {
+			case engine::StringEngine::FractionalDisplayMode::MIXED:
+				_strEngine.setFractionalDisplayMode(engine::StringEngine::FractionalDisplayMode::PROVISIONAL);
 				stackEngine.setCommandMessage("M_PROV");
 				break;
-			case engine::StringEngine::RationalDisplayMode::PROVISIONAL:
-				_strEngine.setRationalDisplayMode(engine::StringEngine::RationalDisplayMode::MIXED);
+			case engine::StringEngine::FractionalDisplayMode::PROVISIONAL:
+				_strEngine.setFractionalDisplayMode(engine::StringEngine::FractionalDisplayMode::MIXED);
 				stackEngine.setCommandMessage("M_MIX");
 				break;
 			default:

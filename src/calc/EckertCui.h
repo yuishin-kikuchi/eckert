@@ -83,6 +83,7 @@ class EckertCui {
 		void operateCalculator(const std::string &str);
 		void operateCalculator(const std::vector<std::string> &tokens);
 		ReturnCode operateCalculatorOneKeyword(const std::string &token);
+		ReturnCode operateUnitConversion(const std::string &token);
 		ReturnCode operateGeneralCalculation(const std::string &token);
 		ReturnCode operateRegister(const std::string &token);
 		ReturnCode changeCalculatorMode(const std::string &token);
@@ -149,8 +150,6 @@ class EckertCui {
 					const engine::StringEngine &stringEngine,
 					const EckertPaginator &paginator);
 				bool registerFlag;
-				bool eulerFlag;
-				bool approxFlag;
 				std::size_t displayLine;
 				std::size_t stackLine;
 				std::size_t registerLine;

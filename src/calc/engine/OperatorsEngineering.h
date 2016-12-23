@@ -1,5 +1,5 @@
 #ifndef _OPERATORS_ENGINEERING_H_
-#define _OPERATORS_ARITHMETIC_H_
+#define _OPERATORS_ENGINEERING_H_
 
 #include "GeneralOperator.h"
 #include "proc/ElementMacros.h"
@@ -220,4 +220,4 @@ class DbtoOperator : public GeneralOperator {
 
 } // namespace engine
 
-#endif // _OPERATORS_ARITHMETIC_H_
+#endif // _OPERATORS_ENGINEERING_H_

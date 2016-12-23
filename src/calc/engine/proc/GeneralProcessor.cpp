@@ -230,6 +230,67 @@ bool GeneralProcessor::isZero(const SpElement &p_ex) {
 }
 
 ////==--------------------------------------------------------------------====//
+// ECKERT GENERAL PROCESSOR / IS POSITIVE ZERO
+// [ description ]
+// Judge if the SpElement is zero
+// [ Update ]
+// Dec 21, 2016
+//====--------------------------------------------------------------------==////
+bool GeneralProcessor::isPositiveZero(const SpElement &p_ex) {
+	if (nullptr == p_ex) {
+		throw TechnicalError("NULLPTR", __FUNCTION__);
+	}
+	if (p_ex->isType(Element::FLOATING)) {
+		auto flt = GET_FLOATING_DATA(p_ex);
+		if (0.0 == flt) {
+			if (1.0 / flt > 0.0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return isZero(p_ex);
+	}
+}
+
+////==--------------------------------------------------------------------====//
+// ECKERT GENERAL PROCESSOR / IS NEGATIVE ZERO
+// [ description ]
+// Judge if the SpElement is zero
+// [ Update ]
+// Dec 21, 2016
+//====--------------------------------------------------------------------==////
+bool GeneralProcessor::isNegativeZero(const SpElement &p_ex) {
+	if (nullptr == p_ex) {
+		throw TechnicalError("NULLPTR", __FUNCTION__);
+	}
+	if (p_ex->isType(Element::FLOATING)) {
+		auto flt = GET_FLOATING_DATA(p_ex);
+		if (0.0 == flt) {
+			if (1.0 / flt < 0.0) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return isZero(p_ex);
+	}
+}
+
+
+////==--------------------------------------------------------------------====//
 // ECKERT GENERAL PROCESSOR / IS POSITIVE
 // [ description ]
 // Judge if the SpElement is positive
@@ -243,20 +304,8 @@ bool GeneralProcessor::isPositive(const SpElement &p_ex) {
 	switch (p_ex->getType()) {
 		case Element::INTEGER:
 			return (0 < GET_INTEGER_DATA(p_ex));
-		case Element::FLOATING: {
-			auto flt = GET_FLOATING_DATA(p_ex);
-			if (0.0 == flt) {
-				if (1.0 / flt > 0.0) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return (0.0 < flt);
-			}
-		}
+		case Element::FLOATING:
+			return (0.0 < GET_FLOATING_DATA(p_ex));
 		case Element::RATIONAL:
 			return (0 < GET_RATIONAL_DATA(p_ex).getNum());
 		case Element::EINFINITY:
@@ -280,20 +329,8 @@ bool GeneralProcessor::isNegative(const SpElement &p_ex) {
 	switch (p_ex->getType()) {
 		case Element::INTEGER:
 			return (0 > GET_INTEGER_DATA(p_ex));
-		case Element::FLOATING: {
-			auto flt = GET_FLOATING_DATA(p_ex);
-			if (0.0 == flt) {
-				if (1.0 / flt < 0.0) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return (flt < 0.0);
-			}
-		}
+		case Element::FLOATING:
+			return (GET_FLOATING_DATA(p_ex) < 0.0);
 		case Element::RATIONAL:
 			return (0 > GET_RATIONAL_DATA(p_ex).getNum());
 		case Element::EINFINITY:

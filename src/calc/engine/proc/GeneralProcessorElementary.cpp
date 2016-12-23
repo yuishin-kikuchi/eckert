@@ -380,8 +380,8 @@ SpElement GeneralProcessor::hypot(const SpElement &p_ey, const SpElement &p_ex) 
 	if (!p_ey->isKindOf(Element::SCALAR_TYPE) || !p_ex->isKindOf(Element::SCALAR_TYPE)) {
 		throw BadArgument("BAD_TYPE", __FUNCTION__);
 	}
-	SpElement insideRoot = add(GEN_INTEGER(1), square(div(p_ey, p_ex)));
-	SpElement p_etemp = mul(abs(p_ex), sqrt(insideRoot));
+	SpElement insideRoot = add(square(p_ey), square(p_ex));
+	SpElement p_etemp = sqrt(insideRoot);
 	return p_etemp;
 }
 

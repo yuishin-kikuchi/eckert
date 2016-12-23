@@ -226,7 +226,7 @@ class ProdOperator : public GeneralOperator {
 					p_etemp = stack.fetch(0);
 					std::size_t items = stack.size();
 					for (std::size_t ucnt = 1; ucnt < items; ++ucnt) {
-						p_etemp = proc.add(p_etemp, stack.fetch(ucnt));
+						p_etemp = proc.mul(p_etemp, stack.fetch(ucnt));
 						if (proc.checkFlags(GeneralProcessor::FLT_OVERFLOW)) {
 							stackEngine.setErrorMessage("TOO_LRGE");
 							return true;
@@ -468,7 +468,7 @@ class ProdWDOperator : public GeneralOperator {
 					p_etemp = stack.fetch(0);
 					std::size_t items = stack.size();
 					for (std::size_t ucnt = 1; ucnt < items; ++ucnt) {
-						p_etemp = proc.add(p_etemp, stack.fetch(ucnt));
+						p_etemp = proc.mul(p_etemp, stack.fetch(ucnt));
 						if (proc.checkFlags(GeneralProcessor::FLT_OVERFLOW)) {
 							stackEngine.setErrorMessage("TOO_LRGE");
 							return true;
@@ -931,7 +931,7 @@ class PartialHarmonicAverageOperator : public GeneralOperator {
 							try {
 								p_etemp = proc.inv(stack.fetch(1));
 								for (std::size_t ucnt = 2; ucnt < arg_count + 1; ++ucnt) {
-									p_etemp = proc.mul(p_etemp, stack.fetch(ucnt));
+									p_etemp = proc.add(p_etemp, proc.inv(stack.fetch(ucnt)));
 									if (proc.checkFlags(GeneralProcessor::FLT_OVERFLOW)) {
 										stackEngine.setErrorMessage("TOO_LRGE");
 										return true;
@@ -1257,7 +1257,7 @@ class PartialHarmonicAverageWDOperator : public GeneralOperator {
 							try {
 								p_etemp = proc.inv(stack.fetch(1));
 								for (std::size_t ucnt = 2; ucnt < arg_count + 1; ++ucnt) {
-									p_etemp = proc.mul(p_etemp, stack.fetch(ucnt));
+									p_etemp = proc.add(p_etemp, proc.inv(stack.fetch(ucnt)));
 									if (proc.checkFlags(GeneralProcessor::FLT_OVERFLOW)) {
 										stackEngine.setErrorMessage("TOO_LRGE");
 										return true;

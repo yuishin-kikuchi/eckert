@@ -6,6 +6,107 @@
 
 namespace engine {
 
+class ToDmsOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TDMS");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				if (!p_ex->isKindOf(Element::SCALAR_TYPE)) {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+				SpElement deg;
+				SpElement min;
+				SpElement sec;
+				try {
+					SpElement p_etemp;
+					bool is_neg = false;
+					if (proc.isNegative(p_ex)) {
+						is_neg = true;
+						p_etemp = proc.neg(p_ex);
+					}
+					else {
+						p_etemp = p_ex;
+					}
+					deg = proc.floor(p_etemp);
+					p_etemp = proc.mul(proc.sub(p_etemp, deg), GEN_INTEGER(60));
+					min = proc.floor(p_etemp);
+					p_etemp = proc.mul(proc.sub(p_etemp, min), GEN_INTEGER(60));
+					sec = p_etemp;
+					if (is_neg) {
+						deg = proc.neg(deg);
+						min = proc.neg(min);
+						sec = proc.neg(sec);
+					}
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(deg);
+				stack.push(min);
+				stack.push(sec);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
+class DmsToOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_DMST");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement deg = stack.fetch(2);
+				SpElement min = stack.fetch(1);
+				SpElement sec = stack.fetch(0);
+				if (!deg->isKindOf(Element::SCALAR_TYPE) ||
+					!min->isKindOf(Element::SCALAR_TYPE) ||
+					!sec->isKindOf(Element::SCALAR_TYPE))
+				{
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+				SpElement p_etemp;
+				try {
+					p_etemp = deg;
+					p_etemp = proc.add(p_etemp, proc.div(min, GEN_INTEGER(60)));
+					p_etemp = proc.add(p_etemp, proc.div(sec, GEN_INTEGER(3600)));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(3);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 3;
+		}
+};
+
 class RadianToDegreeOperator : public GeneralOperator {
 	public:
 		virtual bool operate(StackEngine &stackEngine) const {

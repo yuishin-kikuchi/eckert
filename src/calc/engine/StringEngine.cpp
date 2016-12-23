@@ -1,6 +1,3 @@
-// This file is a part of ECKERT
-// (C) Yuishin Kikuchi
-
 #include "StringEngine.h"
 #include "CalculationConfig.h"
 #include "proc/GeneralProcessor.h"
@@ -14,6 +11,11 @@
 
 namespace engine {
 
+////==--------------------------------------------------------------------====//
+// 10TH POWER
+// [ Update ]
+// Dec 18, 2016
+//====--------------------------------------------------------------------==////
 static floating_t pow10(int exp) {
 	if (exp == 0) {
 		return 1.0L;
@@ -46,6 +48,28 @@ static floating_t pow10(int exp) {
 }
 
 ////==--------------------------------------------------------------------====//
+// IS FINITE DECIMAL RATIONAL
+// [ Update ]
+// Dec 18, 2016
+//====--------------------------------------------------------------------==////
+static bool isFiniteDecimalRational(const rational_t &rat) {
+	auto den = rat.getDen();
+	while (0 == den % 2) {
+		den /= 2;
+	}
+	if (1 == den) {
+		return true;
+	}
+	while (0 == den % 5) {
+		den /= 5;
+	}
+	if (1 == den) {
+		return true;
+	}
+	return false;
+}
+
+////==--------------------------------------------------------------------====//
 // STRING ENGINE / CONSTRUCTOR
 // [ Update ]
 // Nov 30, 2016
@@ -57,14 +81,14 @@ StringEngine::StringEngine() {
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / INITIALIZER
 // [ Update ]
-// Nov 30, 2016
+// Dec 23, 2016
 //====--------------------------------------------------------------------==////
 void StringEngine::init() {
 	_fcfg.init();
 	_tdisp = TypeDisplayMode::LONG;
-	_rdisp = RationalDisplayMode::PROVISIONAL;
+	_ddisp = DecimalDisplayMode::FORCE_DECIMAL;
+	_frdisp = FractionalDisplayMode::PROVISIONAL;
 	_nbase = NumberBaseMode::HEXADECIMAL;
-	_apx = false;
 	_euler = false;
 }
 
@@ -505,6 +529,106 @@ std::string StringEngine::elementToString(const CalculationConfig &cfg, const Sp
 }
 
 ////==--------------------------------------------------------------------====//
+// STRING ENGINE / COMPLEX ARGUMENT TO STRING
+// [ Update ]
+// Dec 18, 2016
+//====--------------------------------------------------------------------==////
+std::string StringEngine::complexArgumentToString(const CalculationConfig &cfg, const SpElement &elm) const {
+	std::ostringstream os;
+	switch (elm->getType()) {
+		case Element::INTEGER: {
+			auto num = GET_INTEGER_DATA(elm);
+			const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
+			int digits = 0;
+			switch (fcfg.getDisplayMode()) {
+				case FloatingDisplayConfig::STANDARD:
+					os << num;
+					return os.str();
+				case FloatingDisplayConfig::FIXED:
+					digits = fcfg.getFixDigits();
+					break;
+				case FloatingDisplayConfig::SCIENTIFIC:
+					digits = fcfg.getSciDigits() - 1;
+					if (num > 100.0L) {
+						digits -= 2;
+					}
+					else if (num > 10.0L) {
+						digits -= 1;
+					}
+					break;
+				case FloatingDisplayConfig::ENGINEERING:
+					digits = fcfg.getEngDigits() - 1;
+					if (num > 100.0L) {
+						digits -= 2;
+					}
+					else if (num > 10.0L) {
+						digits -= 1;
+					}
+					break;
+				default:
+					break;
+			}
+			if (digits < 0) {
+				digits = 0;
+			}
+			os << floatToFixedString((floating_t)num, digits);
+			break;
+		}
+		case Element::FLOATING: {
+			auto num = GET_FLOATING_DATA(elm);
+			const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
+			int digits = 0;
+			switch (fcfg.getDisplayMode()) {
+				case FloatingDisplayConfig::STANDARD:
+					digits = fcfg.getStdDigits() - 1;
+					if (num > 100.0L) {
+						digits -= 2;
+					}
+					else if (num > 10.0L) {
+						digits -= 1;
+					}
+					break;
+				case FloatingDisplayConfig::FIXED:
+					digits = fcfg.getFixDigits();
+					break;
+				case FloatingDisplayConfig::SCIENTIFIC:
+					digits = fcfg.getSciDigits() - 1;
+					if (num > 100.0L) {
+						digits -= 2;
+					}
+					else if (num > 10.0L) {
+						digits -= 1;
+					}
+					break;
+				case FloatingDisplayConfig::ENGINEERING:
+					digits = fcfg.getEngDigits() - 1;
+					if (num > 100.0L) {
+						digits -= 2;
+					}
+					else if (num > 10.0L) {
+						digits -= 1;
+					}
+					break;
+				default:
+					break;
+			}
+			if (digits < 0) {
+				digits = 0;
+			}
+			os << floatToFixedString((floating_t)num, digits);
+			break;
+		}
+		case Element::RATIONAL: {
+			auto rtemp = GET_RATIONAL_DATA(elm);
+			return complexArgumentToString(cfg, GEN_FLOATING(rtemp.getFloating()));
+		}
+		default:
+			throw TechnicalError("Unexpected type!", __FUNCTION__);
+	}
+	return os.str();
+}
+
+////==--------------------------------------------------------------------====//
 // STRING ENGINE / ERROR TO STRING
 // [ Update ]
 // Nov 16, 2016
@@ -558,29 +682,30 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 			os << integerToString(cfg, proc.abs(elm));
 			os << " exp(+i";
 			switch (cfg.getAngleMode()) {
-				case CalculationConfig::AngleMode::RADIAN:
+				case CalculationConfig::AngleMode::RADIAN: {
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << floatingToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
 					}
 					break;
+				}
 				case CalculationConfig::AngleMode::DEGREE:
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(180));
+						os << complexArgumentToString(cfg, GEN_INTEGER(180));
 					}
 					os << 'd';
 					break;
 				case CalculationConfig::AngleMode::GRADE:
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(200));
+						os << complexArgumentToString(cfg, GEN_INTEGER(200));
 					}
 					os << 'g';
 					break;
@@ -592,23 +717,13 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 		_euler = true;
 		return os.str();
 	}
-	else if (getApproxFlag()) {
-		if (0 == num) {
-			os << 0;
-		}
-		else {
-			const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
-			switch (fcfg.getDisplayMode()) {
-				case FloatingDisplayConfig::STANDARD:
-					os << num;
-					break;
-				default:
-					return floatingToString(cfg, GEN_FLOATING((floating_t)num));
-			}
-		}
-	}
-	else {
-		os << num;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
+	switch (fcfg.getDisplayMode()) {
+		case FloatingDisplayConfig::STANDARD:
+			os << num;
+			break;
+		default:
+			return floatingToString(cfg, GEN_FLOATING((floating_t)num));
 	}
 	return os.str();
 }
@@ -634,27 +749,27 @@ std::string StringEngine::floatingToString(const CalculationConfig &cfg, const S
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN:
 					if (num > 0.0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << floatingToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
 					}
 					break;
 				case CalculationConfig::AngleMode::DEGREE:
 					if (num > 0.0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(180));
+						os << complexArgumentToString(cfg, GEN_INTEGER(180));
 					}
 					os << 'd';
 					break;
 				case CalculationConfig::AngleMode::GRADE:
 					if (num > 0.0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(200));
+						os << complexArgumentToString(cfg, GEN_INTEGER(200));
 					}
 					os << 'g';
 					break;
@@ -720,27 +835,27 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN:
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << floatingToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
 					}
 					break;
 				case CalculationConfig::AngleMode::DEGREE:
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(180));
+						os << complexArgumentToString(cfg, GEN_INTEGER(180));
 					}
 					os << 'd';
 					break;
 				case CalculationConfig::AngleMode::GRADE:
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << integerToString(cfg, GEN_INTEGER(200));
+						os << complexArgumentToString(cfg, GEN_INTEGER(200));
 					}
 					os << 'g';
 					break;
@@ -752,35 +867,60 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 		_euler = true;
 		return os.str();
 	}
-	if (getApproxFlag()) {
-		return floatingToString(cfg, GEN_FLOATING(rtemp.getFloating()));
-	}
-	else {
-		switch (getRationalDisplayMode()) {
-			case RationalDisplayMode::PROVISIONAL:
-				os << rtemp;
-				break;
-			case RationalDisplayMode::MIXED: {
-				auto num = rtemp.getNum();
-				auto den = rtemp.getDen();
-				if (std::abs(num) >= den) {
-					if (num < 0) {
-						os << '-';
-						num = -num;
-					}
-					auto ipart = num / den;
-					auto new_num = num % den;
-					os << ipart << '.' << new_num << '/' << den;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
+	switch (fcfg.getDisplayMode()) {
+		case FloatingDisplayConfig::STANDARD: {
+			bool is_finite_decimal = false;
+			switch (getDecimalDisplayMode()) {
+				case DecimalDisplayMode::AUTO_DECIMAL: {
+					is_finite_decimal = isFiniteDecimalRational(rtemp);
+					break;
 				}
-				else {
-					os << rtemp;
+				case DecimalDisplayMode::FORCE_DECIMAL: {
+					is_finite_decimal = true;
+					break;
 				}
-				break;
+				case DecimalDisplayMode::FORCE_FRACTIONAL: {
+					is_finite_decimal = false;
+					break;
+				}
+				default:
+					break;
 			}
-			default:
-				os << rtemp;
-				break;
+			if (is_finite_decimal) {
+				os << floatingToString(cfg, GEN_FLOATING(rtemp.getFloating()));
+			}
+			else switch (getFractionalDisplayMode()) {
+				case FractionalDisplayMode::PROVISIONAL:
+					os << rtemp;
+					break;
+				case FractionalDisplayMode::MIXED: {
+					
+					auto num = rtemp.getNum();
+					auto den = rtemp.getDen();
+					if (std::abs(num) >= den) {
+						if (num < 0) {
+							os << '-';
+							num = -num;
+						}
+						auto ipart = num / den;
+						auto new_num = num % den;
+						os << ipart << '.' << new_num << '/' << den;
+					}
+					else {
+						os << rtemp;
+					}
+					break;
+				}
+				default:
+					os << rtemp;
+					break;
+			}
+			break;
 		}
+		default:
+			os << floatingToString(cfg, GEN_FLOATING(rtemp.getFloating()));
+			break;
 	}
 	return os.str();
 }
@@ -830,7 +970,7 @@ std::string StringEngine::complexToReImString(const CalculationConfig &cfg, cons
 	if (!is_pure_imag) {
 		os << elementToString(cfg, real);
 	}
-	if (proc.isNegative(imag)) {
+	if (proc.isNegative(imag) || proc.isNegativeZero(imag)) {
 		os << (is_pure_imag ? "-i" : " - i");
 		if (!is_one) {
 			os << elementToString(cfg, proc.abs(imag));
@@ -875,10 +1015,10 @@ std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, con
 	if (!proc.checkFlags(GeneralProcessor::FLT_OVERFLOW)) {
 		bool flag_backup = _euler;
 		_euler = false;
-		bool is_neg = proc.isNegative(argument);
+		bool is_neg = proc.isNegative(argument) || proc.isNegativeZero(argument);
 		os << elementToString(cfg, absolute);
 		os << " exp(" << (is_neg ? "-i" : "+i");
-		os << elementToString(cfg, proc.abs(argument));
+		os << complexArgumentToString(cfg, proc.abs(argument));
 		switch (cfg.getAngleMode()) {
 			case CalculationConfig::AngleMode::DEGREE:
 				os << 'd';
@@ -906,21 +1046,11 @@ std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, con
 // Nov 16, 2016
 //====--------------------------------------------------------------------==////
 std::string StringEngine::booleanToString(const CalculationConfig &cfg, const SpElement &elm) const {
-	if (getApproxFlag()) {
-		if (GET_BOOLEAN_DATA(elm)) {
-			return std::string("1");
-		}
-		else {
-			return std::string("0");
-		}
+	if (GET_BOOLEAN_DATA(elm)) {
+		return std::string("T");
 	}
 	else {
-		if (GET_BOOLEAN_DATA(elm)) {
-			return std::string("TRUE");
-		}
-		else {
-			return std::string("FALSE");
-		}
+		return std::string("F");
 	}
 }
 

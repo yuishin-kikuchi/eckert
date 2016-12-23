@@ -167,6 +167,136 @@ class MakeUnitMatrixOperator : public GeneralOperator {
 		}
 };
 
+class GetElementFromMatrixOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_MGET");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ez = stack.fetch(2);
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				if (p_ez->isType(Element::MATRIX) && p_ey->isType(Element::INTEGER) && p_ex->isType(Element::INTEGER)) {
+					integer_t size_m = GET_MATRIX_SIZE_M(p_ez);
+					integer_t size_n = GET_MATRIX_SIZE_N(p_ez);
+					integer_t pos_i = GET_INTEGER_DATA(p_ey);
+					integer_t pos_j = GET_INTEGER_DATA(p_ex);
+					if ((0 < pos_i) && (pos_i <= size_m) && (0 < pos_j) && (pos_j <= size_n)) {
+						SpElement elm = GET_MATRIX_DATA(p_ez, (std::size_t)pos_i - 1, (std::size_t)pos_j - 1);
+						stack.drop(3);
+						stack.push(elm);
+					}
+					else {
+						stackEngine.setErrorMessage("BAD_RNG");
+						return true;
+					}
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 3;
+		}
+};
+
+class GetRowFromMatrixOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_MGETR");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				if (p_ey->isType(Element::MATRIX) && p_ex->isType(Element::INTEGER)) {
+					integer_t size_m = GET_MATRIX_SIZE_M(p_ey);
+					integer_t size_n = GET_MATRIX_SIZE_N(p_ey);
+					integer_t pos_i = GET_INTEGER_DATA(p_ex);
+					if ((0 < pos_i) && (pos_i <= size_m)) {
+						std::vector<engine::SpElement> tuple;
+						for (integer_t cnt = 0; cnt < size_n; ++cnt) {
+							SpElement elm = GET_MATRIX_DATA(p_ey, (std::size_t)pos_i - 1, (std::size_t)cnt);
+							tuple.push_back(elm);
+						}
+						stack.drop(2);
+						stack.push(GEN_ETUPLE2(tuple, ETuple::TupleType::ROW));
+					}
+					else {
+						stackEngine.setErrorMessage("BAD_RNG");
+						return true;
+					}
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
+		}
+};
+
+class GetColumnFromMatrixOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_MGETC");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				if (p_ey->isType(Element::MATRIX) && p_ex->isType(Element::INTEGER)) {
+					integer_t size_m = GET_MATRIX_SIZE_M(p_ey);
+					integer_t size_n = GET_MATRIX_SIZE_N(p_ey);
+					integer_t pos_j = GET_INTEGER_DATA(p_ex);
+					if ((0 < pos_j) && (pos_j <= size_n)) {
+						std::vector<engine::SpElement> tuple;
+						for (integer_t cnt = 0; cnt < size_m; ++cnt) {
+							SpElement elm = GET_MATRIX_DATA(p_ey, (std::size_t)cnt, (std::size_t)pos_j - 1);
+							tuple.push_back(elm);
+						}
+						stack.drop(2);
+						stack.push(GEN_ETUPLE2(tuple, ETuple::TupleType::COLUMN));
+					}
+					else {
+						stackEngine.setErrorMessage("BAD_RNG");
+						return true;
+					}
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
+		}
+};
+
 class TransposeOperator : public GeneralOperator {
 	public:
 		virtual bool operate(StackEngine &stackEngine) const {

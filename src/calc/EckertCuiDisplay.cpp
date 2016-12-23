@@ -1,6 +1,7 @@
 #include "EckertCui.h"
 #include "engine/proc/except/Exceptions.h"
 #include "engine/EckertConstants.h"
+#include "engine/UnitConverter.h"
 #include "util/StringTables.h"
 #include <iostream>
 #include <iomanip>
@@ -68,19 +69,26 @@ catch (...) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / DISPLAY VERSION
 // [ Update ]
-// Nov 25, 2016
+// Dec 16, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::displayVersion() {
+	const auto &constantTable = engine::EckertConstants::scientificConstants;
+	const auto &unitTable = engine::UnitConverter::criteria;
 	auto display_width = _paginator.getDisplayWidth();
 	std::cout << indent << "VERSION DISPLAY" << std::endl;
 	putline(display_width, '=');
 	// eckert cui
-	std::cout << indent << "ECKERT" << ':' << std::endl;
-	std::cout << indent_deep << VERSION << std::endl;
+	std::cout << indent << VERSION << std::endl;
 	// info
 	const auto opSize = _engCalc.refOperators().size();
 	const auto drgSize = _drgOperators.size();
-	std::cout << indent_deep << '(' << opSize + drgSize * 3 << " functions)" << std::endl;
+	const auto constSize = constantTable.size();
+	const auto unitSize = unitTable.size();
+	putline(display_width, '-');
+	std::cout << indent_deep << "   Stack functions: " << opSize + drgSize * 3 << std::endl;
+	std::cout << indent_deep << "Register functions: " << 9 << std::endl;
+	std::cout << indent_deep << "Math/Sci constants: " << constSize << std::endl;
+	std::cout << indent_deep << "  Supporting units: " << unitSize << std::endl;
 }
 
 ////==--------------------------------------------------------------------====//
@@ -478,6 +486,20 @@ void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 	// Display mode of Homura
 	std::cout << indent;
 	std::cout << "HOMURA: ";
+	switch (_strEngine.getDecimalDisplayMode()) {
+		case engine::StringEngine::DecimalDisplayMode::AUTO_DECIMAL:
+			std::cout << "(AD) ";
+			break;
+		case engine::StringEngine::DecimalDisplayMode::FORCE_DECIMAL:
+			std::cout << "(FD) ";
+			break;
+		case engine::StringEngine::DecimalDisplayMode::FORCE_FRACTIONAL:
+			std::cout << "(FF) ";
+			break;
+		default:
+			std::cout << "!ERROR!";
+			break;
+	}
 	switch (_cfg.getAngleMode()) {
 		case engine::CalculationConfig::AngleMode::DEGREE:
 			std::cout << "(Deg) ";
@@ -489,6 +511,7 @@ void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 			std::cout << "(Gra) ";
 			break;
 		default:
+			std::cout << "!ERROR!";
 			break;
 	}
 	switch (_strEngine.getNumberBaseMode()) {
@@ -508,6 +531,7 @@ void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 			std::cout << "(Hex) ";
 			break;
 		default:
+			std::cout << "!ERROR!";
 			break;
 	}
 	switch (_parser.getBinarySize()) {
@@ -524,22 +548,20 @@ void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 			std::cout << "(Qword) ";
 			break;
 		default:
+			std::cout << "!ERROR!";
 			break;
 	}
 	if (dh.registerFlag) {
 		std::cout << "[Reg] ";
 	}
-	if (dh.eulerFlag) {
+	if (_strEngine.getEulerFlag()) {
 		std::cout << "[Eul] ";
 	}
-	if (dh.approxFlag) {
-		std::cout << "[Apx] ";
-	}
-	switch (_strEngine.getRationalDisplayMode()) {
-		case engine::StringEngine::RationalDisplayMode::MIXED:
+	switch (_strEngine.getFractionalDisplayMode()) {
+		case engine::StringEngine::FractionalDisplayMode::MIXED:
 			std::cout << "[i.a/b] ";
 			break;
-		case engine::StringEngine::RationalDisplayMode::PROVISIONAL:
+		case engine::StringEngine::FractionalDisplayMode::PROVISIONAL:
 			break;
 		default:
 			break;
@@ -638,7 +660,7 @@ void EckertCui::showColumn(const EckertCui::DisplayHint &dh) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / SHOW CALCULATOR INFORMATION
 // [ Update ]
-// Feb 03, 2016
+// Dec 22, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::showCalculatorAdditionalInformation() {
 	const char *DEFAULT_MESSAGE = "Ready to operate";
@@ -737,7 +759,78 @@ void EckertCui::showCalculatorAdditionalInformation() {
 		std::cout << indent;
 		// information
 		if (!opcode.compare("H_JSON")) {
-			std::cout << "out: " << getJsonFilename() << std::endl;
+			if (!errcode.compare("OUT_ERR")) {
+				std::cout << "Error: " << errorMessageTable.at(errcode) << std::endl;
+			}
+			else {
+				std::cout << "out: " << getJsonFilename() << std::endl;
+			}
+		}
+		else if (!opcode.compare("H_CONV")) {
+			auto fromUnit = _stat.getFromUnit();
+			auto toUnit = _stat.getToUnit();
+			switch (_stat.getWaitingState()) {
+				case EckertStates::FIRST_UNIT:
+					std::cout << "Confirm: From ______" << std::endl;
+					break;
+				case EckertStates::SECOND_UNIT:
+					std::cout
+					<< "Confirm: From ["
+					<< engine::UnitConverter::getUnitName(fromUnit)
+					<< "] to ______"
+					<< std::endl;
+					break;
+				default:
+					switch (msg_type) {
+						case EckertCui::MessageType::NO_ERROR:
+							std::cout
+								<< "From ["
+								<< engine::UnitConverter::getUnitName(fromUnit)
+								<< "] to ["
+								<< engine::UnitConverter::getUnitName(toUnit)
+								<< ']'
+								<< std::endl;
+							break;
+						case EckertCui::MessageType::ERROR: {
+							if (!errcode.compare("CNV_ERR")) {
+								std::cout
+									<< "Error: From ["
+									<< engine::UnitConverter::getUnitName(fromUnit)
+									<< "] to ["
+									<< engine::UnitConverter::getUnitName(toUnit)
+									<< "] : INVALID"
+									<< std::endl;
+							}
+							else {
+								std::cout << "Error: " << errorMessageTable.at(errcode) << std::endl;
+							}
+							break;
+						}
+						default:
+							std::cout << "Error code: " << errcode << std::endl;
+							break;
+					}
+					break;
+			}
+		}
+		else if (!opcode.compare("H_REC")) {
+			auto fromUnit = _stat.getPrevFromUnit();
+			auto toUnit = _stat.getPrevToUnit();
+			if (msg_type == EckertCui::MessageType::ERROR) {
+				std::cout
+					<< "Error: "
+					<< errorMessageTable.at(errcode)
+					<< std::endl;
+			}
+			else {
+				std::cout
+					<< "From ["
+					<< engine::UnitConverter::getUnitName(fromUnit)
+					<< "] to ["
+					<< engine::UnitConverter::getUnitName(toUnit)
+					<< ']'
+					<< std::endl;
+			}
 		}
 		else {
 			switch (msg_type) {

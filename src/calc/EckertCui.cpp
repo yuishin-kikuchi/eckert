@@ -21,7 +21,7 @@ const char *const EckertCui::NAME
 const char *const EckertCui::AUTHOR
  = "(C) 2014-2017  Yuishin Kikuchi";
 const char *const EckertCui::VERSION
- = "Version Dec 14, 2016";
+ = "Version Dec 23, 2016";
 
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / CONSTRUCTER
@@ -366,8 +366,6 @@ void EckertCui::DisplayHint::init(
 	stackItems = stack.size();
 	registerSize = reg.size();
 	registerFlag = paginator.getRegisterDisplayFlag();
-	approxFlag = stringEngine.getApproxFlag();
-	eulerFlag = stringEngine.getEulerFlag();
 	displayLine = paginator.getDisplayLine();
 	displayWidth = paginator.getDisplayWidth();
 	stackLine = paginator.calcStackLine(registerSize);

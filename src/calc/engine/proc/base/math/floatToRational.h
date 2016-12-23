@@ -30,15 +30,25 @@ SafetyRational<IntegerType, FloatingType> approxRational(const FloatingType &num
 	std::vector<IntegerType> vec;
 	floatToContFraction(vec, temp);
 	SafetyRational<IntegerType, FloatingType> r;
+	int fail_count = 0;
 	if (!vec.empty()) {
-		r = *(vec.rbegin());
-		for (auto it = vec.rbegin() + 1; it != vec.rend(); ++it) {
-			try{
-				r = *it + r.inv();
+		for (;;) {
+			bool failed = false;
+			r = *(vec.rbegin() + fail_count);
+			for (auto it = vec.rbegin() + 1; it != vec.rend(); ++it) {
+				try {
+					r = *it + r.inv();
+				}
+				catch (...) {
+					failed = true;
+					break;
+				}
 			}
-			catch (...) {
-				r = *it;
+			if (failed) {
+				++fail_count;
+				continue;
 			}
+			break;
 		}
 		if (is_minus) {
 			return -r;

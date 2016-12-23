@@ -827,6 +827,818 @@ class YobiOperator : public PrefixOperator {
 		}
 };
 
+class ToYoctoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TYOCT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("y"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToZeptoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TZEPT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("z"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToAttoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TATTO");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("a"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToFemtoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TFEMT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("f"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToPicoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TPICO");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("p"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToNanoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TNANO");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("n"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToMicroOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TMICR");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("u"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToMilliOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TMILL");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("m"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToCentiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TCENT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("c"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToDeciOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TDECI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("d"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToDecaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TDECA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("da"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToHectoOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_THECT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("h"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToKiloOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TKILO");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("k"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToMegaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TMEGA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("M"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToGigaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TGIGA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("G"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToTeraOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TTERA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("T"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToPetaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TPETA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("P"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToExaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TEXA");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("E"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToZettaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TZETT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Z"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToYottaOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TYOTT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Y"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToKibiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TKIBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ki"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToMebiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TMEBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Mi"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToGibiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TGIBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Gi"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToTebiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TTEBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ti"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToPebiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TPEBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Pi"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToExbiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TEXBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ei"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToZebiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TZEBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Zi"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
+class ToYobiOperator : public PrefixOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TYOBI");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Yi"));
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+};
+
 } // namespace engine
 
 #endif // _OPERATORS_PREFIX_H_

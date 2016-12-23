@@ -312,6 +312,7 @@ class UnpickOperator : public GeneralOperator {
 		}
 };
 
+/*
 class Pick3Operator : public GeneralOperator {
 	public:
 		virtual bool operate(StackEngine &stackEngine) const {
@@ -330,6 +331,7 @@ class Pick3Operator : public GeneralOperator {
 			return 3;
 		}
 };
+*/
 
 class StackDepthOperator : public GeneralOperator {
 	public:
@@ -421,6 +423,25 @@ class Drop2Operator : public GeneralOperator {
 		}
 		virtual std::size_t getRequiredCount() const {
 			return 2;
+		}
+};
+
+class Drop3Operator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			stackEngine.setCommandMessage("OP_DRP3");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				stack.drop(3);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 3;
 		}
 };
 

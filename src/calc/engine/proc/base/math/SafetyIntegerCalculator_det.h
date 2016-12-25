@@ -207,7 +207,7 @@ T SafetyIntegerCalculator::gcd(const T &lhs, const T &rhs) {
 	}
 	// if n < 0, negate it
 	if (n < 0) {
-		m = neg(n);
+		n = neg(n);
 	}
 	if (n < m) {
 		temp = m;

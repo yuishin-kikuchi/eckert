@@ -572,7 +572,7 @@ EckertCui::operateCalculatorOneKeyword(const std::string &token) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE UNIT CONVERSION
 // [ Update ]
-// Dec 22, 2016
+// Dec 25, 2016
 //====--------------------------------------------------------------------==////
 EckertCui::ReturnCode
 EckertCui::operateUnitConversion(const std::string &token) {
@@ -581,6 +581,7 @@ EckertCui::operateUnitConversion(const std::string &token) {
 	switch (state) {
 		case EckertStates::NONE: {
 			if (!token.compare("conv") || !token.compare("cv")) {
+				_paginator.resetStackOffset();
 				stackEngine.setCommandMessage("H_CONV");
 				auto &exStack = stackEngine.refExStack();
 				if (exStack.empty()) {
@@ -599,6 +600,7 @@ EckertCui::operateUnitConversion(const std::string &token) {
 				return ReturnCode::SUCCESS;
 			}
 			else if (!token.compare("rec")) {
+				_paginator.resetStackOffset();
 				stackEngine.setCommandMessage("H_REC");
 				auto &exStack = stackEngine.refExStack();
 				if (exStack.empty()) {

@@ -212,21 +212,21 @@ SpElement GeneralProcessor::abs(const SpElement &p_ex) {
 // [ description ]
 // INVERT value for scalar
 // [ Update ]
-// Dec 05, 2016
+// Dec 26, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::inv(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
 	if (nullptr == p_ex) {
 		throw TechnicalError("NULLPTR", __FUNCTION__);
 	}
-	if (isZero(p_ex)) {
-		throw BadArgument("DIV_ZERO", __FUNCTION__);
-	}
 	SpElement p_etemp;
 	switch (p_ex->getType()) {
 		case Element::INTEGER: {
 			//===  inv(INTEGER)  ===//
 			integer_t int_x = GET_INTEGER_DATA(p_ex);
+			if (0 == int_x) {
+				throw BadArgument("DIV_ZERO", __FUNCTION__);
+			}
 			if (!SafetyIntegerCalculator::checkNeg(int_x)) {
 				if (int_x < 0) {
 					setRational(p_etemp, -1, -int_x);
@@ -244,6 +244,9 @@ SpElement GeneralProcessor::inv(const SpElement &p_ex) {
 		case Element::FLOATING: {
 			//===  inv(FLOATING)  ===//
 			floating_t flt_x = GET_FLOATING_DATA(p_ex);
+			if (0.0 == flt_x) {
+				throw BadArgument("DIV_ZERO", __FUNCTION__);
+			}
 			setFloating(p_etemp, 1.0 / flt_x);
 			break;
 		}
@@ -251,6 +254,9 @@ SpElement GeneralProcessor::inv(const SpElement &p_ex) {
 			//===  inv(RATIONAL)  ===//
 			rational_t rat_x = GET_RATIONAL_DATA(p_ex);
 			rational_t rtemp = rat_x.inv();
+			if (0 == rtemp.getNum()) {
+				throw BadArgument("DIV_ZERO", __FUNCTION__);
+			}
 			if (!rtemp.isError()) {
 				if (rtemp.isInteger()) {
 					setInteger(p_etemp, rtemp.getNum());
@@ -271,6 +277,9 @@ SpElement GeneralProcessor::inv(const SpElement &p_ex) {
 		}
 		case Element::COMPLEX: {
 			//===  inv(COMPLEX)  ===//
+			if (isZero(p_ex)) {
+				throw BadArgument("DIV_ZERO", __FUNCTION__);
+			}
 			SpElement p_real;
 			SpElement p_imag;
 			auto a = GET_COMPLEX_RE(p_ex);
@@ -369,7 +378,7 @@ SpElement GeneralProcessor::cbrt(const SpElement &p_ex) {
 // [ description ]
 // HYPOT function for 2 scalars
 // [ Update ]
-// Nov 12, 2016
+// Dec 26, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::hypot(const SpElement &p_ey, const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -380,8 +389,17 @@ SpElement GeneralProcessor::hypot(const SpElement &p_ey, const SpElement &p_ex) 
 	if (!p_ey->isKindOf(Element::SCALAR_TYPE) || !p_ex->isKindOf(Element::SCALAR_TYPE)) {
 		throw BadArgument("BAD_TYPE", __FUNCTION__);
 	}
-	SpElement insideRoot = add(square(p_ey), square(p_ex));
-	SpElement p_etemp = sqrt(insideRoot);
+	SpElement p_etemp;
+	SpElement absx = abs(p_ex);
+	SpElement absy = abs(p_ey);
+	if (isZero(absy) || isZero(absx)) {
+		p_etemp = add(absy, absx);
+	}
+	else {
+		p_etemp = div(absy, absx);
+		p_etemp = add(GEN_INTEGER(1), square(p_etemp));
+		p_etemp = mul(absx, sqrt(p_etemp));
+	}
 	return p_etemp;
 }
 

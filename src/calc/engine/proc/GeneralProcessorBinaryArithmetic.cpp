@@ -356,7 +356,7 @@ SpElement GeneralProcessor::subBinary(const SpElement &p_ey, const SpElement &p_
 // [ description ]
 // Calculate MULTIPLY
 // [ Update ]
-// Nov 14, 2016
+// Dec 26, 2016
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::mulBinary(const SpElement &p_ey, const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -548,9 +548,6 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 	SpElement p_etemp;
 	auto y_type = p_ey->getType();
 	auto x_type = p_ex->getType();
-	if (isZero(p_ex)) {
-		throw BadArgument("DIV_ZERO", __FUNCTION__);
-	}
 	switch (y_type) {
 		case Element::BINARY8:
 			//===  BINARY8 / ???  ===//
@@ -559,6 +556,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY8 / BINARY8  ==//
 					uint8_t byte_y = GET_BYTE_DATA(p_ey);
 					uint8_t byte_x = GET_BYTE_DATA(p_ex);
+					if (0 == byte_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_BYTE(byte_y / byte_x);
 					break;
 				}
@@ -566,6 +566,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY8 / BINARY16  ==//
 					uint8_t byte_y = GET_BYTE_DATA(p_ey);
 					uint16_t word_x = GET_WORD_DATA(p_ex);
+					if (0 == word_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_WORD(byte_y / word_x);
 					break;
 				}
@@ -573,6 +576,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY8 / BINARY32  ==//
 					uint8_t byte_y = GET_BYTE_DATA(p_ey);
 					uint32_t dword_x = GET_DWORD_DATA(p_ex);
+					if (0 == dword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_DWORD(byte_y / dword_x);
 					break;
 				}
@@ -580,6 +586,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY8 / BINARY64  ==//
 					uint8_t byte_y = GET_BYTE_DATA(p_ey);
 					uint64_t qword_x = GET_QWORD_DATA(p_ex);
+					if (0 == qword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(byte_y / qword_x);
 					break;
 				}
@@ -595,6 +604,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY16 / BINARY8  ==//
 					uint16_t word_y = GET_WORD_DATA(p_ey);
 					uint8_t byte_x = GET_BYTE_DATA(p_ex);
+					if (0 == byte_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_WORD(word_y / byte_x);
 					break;
 				}
@@ -602,6 +614,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY16 / BINARY16  ==//
 					uint16_t word_y = GET_WORD_DATA(p_ey);
 					uint16_t word_x = GET_WORD_DATA(p_ex);
+					if (0 == word_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_WORD(word_y / word_x);
 					break;
 				}
@@ -609,6 +624,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY16 / BINARY32  ==//
 					uint16_t word_y = GET_WORD_DATA(p_ey);
 					uint32_t dword_x = GET_DWORD_DATA(p_ex);
+					if (0 == dword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_DWORD(word_y / dword_x);
 					break;
 				}
@@ -631,6 +649,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY32 / BINARY8 ==//
 					uint32_t dword_y = GET_DWORD_DATA(p_ey);
 					uint8_t byte_x = GET_BYTE_DATA(p_ex);
+					if (0 == byte_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_DWORD(dword_y / byte_x);
 					break;
 				}
@@ -638,6 +659,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY32 / BINARY16  ==//
 					uint32_t dword_y = GET_DWORD_DATA(p_ey);
 					uint16_t word_x = GET_WORD_DATA(p_ex);
+					if (0 == word_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_DWORD(dword_y / word_x);
 					break;
 				}
@@ -645,6 +669,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY32 / BINARY32  ==//
 					uint32_t dword_y = GET_DWORD_DATA(p_ey);
 					uint32_t dword_x = GET_DWORD_DATA(p_ex);
+					if (0 == dword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_DWORD(dword_y / dword_x);
 					break;
 				}
@@ -652,6 +679,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY32 / BINARY64  ==//
 					uint32_t dword_y = GET_DWORD_DATA(p_ey);
 					uint64_t qword_x = GET_QWORD_DATA(p_ex);
+					if (0 == qword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(dword_y / qword_x);
 					break;
 				}
@@ -667,6 +697,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY64 / BINARY8  ==//
 					uint64_t qword_y = GET_QWORD_DATA(p_ey);
 					uint8_t byte_x = GET_BYTE_DATA(p_ex);
+					if (0 == byte_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(qword_y / byte_x);
 					break;
 				}
@@ -674,6 +707,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY64 / BINARY16  ==//
 					uint64_t qword_y = GET_QWORD_DATA(p_ey);
 					uint16_t word_x = GET_WORD_DATA(p_ex);
+					if (0 == word_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(qword_y / word_x);
 					break;
 				}
@@ -681,6 +717,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY64 / BINARY32  ==//
 					uint64_t qword_y = GET_QWORD_DATA(p_ey);
 					uint32_t dword_x = GET_DWORD_DATA(p_ex);
+					if (0 == dword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(qword_y / dword_x);
 					break;
 				}
@@ -688,6 +727,9 @@ SpElement GeneralProcessor::divBinary(const SpElement &p_ey, const SpElement &p_
 					//==  BINARY64 / BINARY64  ==//
 					uint64_t qword_y = GET_QWORD_DATA(p_ey);
 					uint64_t qword_x = GET_QWORD_DATA(p_ex);
+					if (0 == qword_x) {
+						throw BadArgument("DIV_ZERO", __FUNCTION__);
+					}
 					p_etemp = GEN_QWORD(qword_y / qword_x);
 					break;
 				}

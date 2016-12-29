@@ -415,6 +415,8 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "OP_PARA", "PARALLEL" },
 	{ "OP_TODB", "TO DECIBEL" },
 	{ "OP_DBTO", "DECIBEL TO REAL" },
+	{ "OP_TEQM", "JOULE to Earthquake MAGNITUDE" },
+	{ "OP_EQMT", "Earthquake MAGNITUDE to JOULE" },
 	// make tuple
 	{ "OP_MRT", "MAKE ROW TUPLE" },
 	{ "OP_MCT", "MAKE COLUMN TUPLE" },

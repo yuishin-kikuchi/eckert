@@ -132,6 +132,8 @@ void EngineeringCalculator::init() {
 	addOperator("para", StackOperatorPtr(new ParallelOperator()));
 	addOperator("todb", StackOperatorPtr(new TodbOperator()));
 	addOperator("dbto", StackOperatorPtr(new DbtoOperator()));
+	addOperator("toeqm", StackOperatorPtr(new ToEqmOperator()));
+	addOperator("eqmto", StackOperatorPtr(new EqmToOperator()));
 	// fundamental
 	addOperator("neg", StackOperatorPtr(new NegateOperator()));
 	addOperator("pm", StackOperatorPtr(new NegateOperator()));

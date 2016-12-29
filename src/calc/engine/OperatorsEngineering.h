@@ -218,6 +218,88 @@ class DbtoOperator : public GeneralOperator {
 		}
 };
 
+class ToEqmOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_TEQM");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				if (p_ex->isKindOf(Element::SCALAR_TYPE)) {
+					if (proc.isNegative(p_ex)) {
+						stackEngine.setErrorMessage("BAD_VAL");
+						return true;
+					}
+					SpElement p_etemp;
+					try {
+						p_etemp = proc.log10(p_ex);
+						p_etemp = proc.div(proc.sub(p_etemp, GEN_FLOATING(4.8L)), GEN_FLOATING(1.5L));
+					}
+					catch (BadArgument &ba) {
+						stackEngine.setErrorMessage(ba.what());
+						return true;
+					}
+					checkFlags(stackEngine);
+					stack.drop(1);
+					stack.push(p_etemp);
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
+class EqmToOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_EQMT");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				if (p_ex->isKindOf(Element::SCALAR_TYPE)) {
+					SpElement p_etemp;
+					try {
+						p_etemp = proc.mul(p_ex, GEN_FLOATING(1.5L));
+						p_etemp = proc.pow10(proc.add(p_etemp, GEN_FLOATING(4.8L)));
+					}
+					catch (BadArgument &ba) {
+						stackEngine.setErrorMessage(ba.what());
+						return true;
+					}
+					checkFlags(stackEngine);
+					stack.drop(1);
+					stack.push(p_etemp);
+				}
+				else {
+					stackEngine.setErrorMessage("BAD_TYPE");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
 } // namespace engine
 
 #endif // _OPERATORS_ENGINEERING_H_

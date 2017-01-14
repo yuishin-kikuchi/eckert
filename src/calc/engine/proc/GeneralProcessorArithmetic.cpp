@@ -112,6 +112,9 @@ SpElement GeneralProcessor::div(const SpElement &p_ey, const SpElement &p_ex) {
 	try {
 		p_etemp = divScalar(p_ey, p_ex);
 	}
+	catch (InvalidValue &) {
+		throw;
+	}
 	catch (BadArgument &) {
 		if (p_ey->isType(Element::ERROR) || p_ex->isType(Element::ERROR)) {
 			setError(p_etemp, "ERROR");

@@ -26,7 +26,7 @@
 ////==--------------------------------------------------------------------====//
 // ENGINEERING CALCULATOR
 // [ Update ]
-// Dec 12, 2016
+// Jan 13, 2017
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -373,7 +373,7 @@ void EngineeringCalculator::init() {
 	addOperator("cross", StackOperatorPtr(new OuterProductOperator()));
 	addOperator("norm", StackOperatorPtr(new EuclidNormOperator()));
 	addOperator("nsq", StackOperatorPtr(new EuclidNormSqOperator()));
-	addOperator("lpnorm", StackOperatorPtr(new LpNormOperator()));
+	addOperator("pnorm", StackOperatorPtr(new LpNormOperator()));
 	addOperator("maxnorm", StackOperatorPtr(new MaxNormOperator()));
 	addOperator("cut", StackOperatorPtr(new CraveOperator()));
 	addOperator("crave", StackOperatorPtr(new CraveOperator()));

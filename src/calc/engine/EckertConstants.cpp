@@ -45,7 +45,7 @@ EckertConstants::scientificConstants = {
 	{ "light", { GEN_INTEGER(299792458), "Speed of light in vacum" } },
 	{ "magnetic", { GEN_FLOATING(1.25663706143591729E-06L), "Magnetic constant" } },
 	{ "electric", { GEN_FLOATING(8.85418781762038985E-12L), "Electric constant" } },
-	{ "impedance", { GEN_FLOATING(376.730313461770655L), "Characteristic impedance of vacuum" } },
+	{ "impedance", { GEN_FLOATING(376.730313461770655L), "Characteristic impedance of vacum" } },
 	{ "gravitation", { GEN_FLOATING(6.67408E-11L), "Gravitation constant" } },
 	{ "planck", { GEN_FLOATING(6.626070040E-34L), "Planck constant" } },
 	{ "rplanck", { GEN_FLOATING(1.054571800E-34L), "Reduced Planck constant" } },
@@ -107,7 +107,7 @@ EckertConstants::scientificConstants = {
 	{ "pl.length", { GEN_FLOATING(1.616229E-35L), "Planck length" } },
 	{ "pl.time", { GEN_FLOATING(5.39116E-44L), "Planck time" } },
 	// astromy
-	{ "astro", { GEN_INTEGER(149597870700), "Astromical unit" } },
+	{ "astro", { GEN_INTEGER(149597870700), "Astronomical unit" } },
 	{ "parsec", { GEN_FLOATING(3.085677581E+16L), "Parsec" } },
 	{ "lyear", { GEN_INTEGER(9460730472580800LL), "Light year" } },
 };

@@ -333,7 +333,7 @@ void EckertCui::operateCalculator(const std::string &str) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE CALCULATOR (vector)
 // [ Update ]
-// Dec 10, 2016
+// Jan 18, 2017
 //====--------------------------------------------------------------------==////
 void EckertCui::operateCalculator(const std::vector<std::string> &tokens)
 try {
@@ -347,7 +347,8 @@ try {
 		bool is_waiting = (EckertStates::NONE != _stat.getWaitingState());
 		if (!is_waiting) {
 			const std::string &token = tokens.at(0);
-			switch (operateCalculatorOneKeyword(token)) {
+			std::string lower_token = StringUtility::genLowerString(token);
+			switch (operateCalculatorOneKeyword(lower_token)) {
 				case ReturnCode::SUCCESS:
 					// fall through
 				case ReturnCode::FAILURE:

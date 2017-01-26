@@ -175,7 +175,7 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "SP_FST", "FIRST PAGE of STACK" },
 	{ "RP_NXT", "NEXT PAGE of REGISTERS" },
 	{ "RP_PRV", "PREVIOUS PAGE of REGISTERS" },
-	{ "RP_RFST", "FIRST PAGE of REGISTERS" },
+	{ "RP_FST", "FIRST PAGE of REGISTERS" },
 	// Clear
 	{ "OP_AC", "ALL CLEAR" },
 	{ "OP_SC", "STACK CLEAR" },

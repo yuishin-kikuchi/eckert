@@ -19,7 +19,12 @@ class MakeRowTupleOperator : public GeneralOperator {
 				if (p_ex->isType(Element::INTEGER)) {
 					integer_t tuple_size = GET_INTEGER_DATA(p_ex);
 					if (tuple_size > 0) {
+						std::size_t items = stack.size();
 						std::size_t usize = (std::size_t)tuple_size;
+						if (usize > items - 1) {
+							stackEngine.setErrorMessage("BAD_CNT");
+							return true;
+						}
 						std::vector<SpElement> tuple;
 						bool all_numeric = true;
 						for (std::size_t ucnt = 0; ucnt < usize; ++ucnt) {
@@ -74,7 +79,12 @@ class MakeColumnTupleOperator : public GeneralOperator {
 				if (p_ex->isType(Element::INTEGER)) {
 					integer_t tuple_size = GET_INTEGER_DATA(p_ex);
 					if (tuple_size > 0) {
+						std::size_t items = stack.size();
 						std::size_t usize = (std::size_t)tuple_size;
+						if (usize > items - 1) {
+							stackEngine.setErrorMessage("BAD_CNT");
+							return true;
+						}
 						std::vector<SpElement> tuple;
 						bool all_numeric = true;
 						for (std::size_t ucnt = 0; ucnt < usize; ++ucnt) {

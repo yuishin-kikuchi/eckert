@@ -6,7 +6,7 @@ const char* CLEAR_SCREEN = "cls";
 #elif defined(__linux__) || defined(__CYGWIN__)
 const char* CLEAR_SCREEN = "clear";
 #else
-const char* CLEAR_SCREEN = nullptr;
+const char* CLEAR_SCREEN = "";
 #endif // defined(_WIN32) || defined(WIN64)
 
 #endif // ifndef _ECKERT_CUI_MAIN_

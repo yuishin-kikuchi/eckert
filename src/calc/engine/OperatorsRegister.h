@@ -199,6 +199,7 @@ class RegAddOperator : public RegisterOperator {
 				}
 				else {
 					reg.at(getPos()) = proc.add(elm, p_ex);
+					stack.drop(1);
 				}
 			}
 			else {
@@ -232,6 +233,7 @@ class RegSubOperator : public RegisterOperator {
 				}
 				else {
 					reg.at(getPos()) = proc.sub(elm, p_ex);
+					stack.drop(1);
 				}
 			}
 			else {
@@ -265,6 +267,7 @@ class RegMulOperator : public RegisterOperator {
 				}
 				else {
 					reg.at(getPos()) = proc.mul(elm, p_ex);
+					stack.drop(1);
 				}
 			}
 			else {
@@ -298,6 +301,7 @@ class RegDivOperator : public RegisterOperator {
 				}
 				else {
 					reg.at(getPos()) = proc.div(elm, p_ex);
+					stack.drop(1);
 				}
 			}
 			else {

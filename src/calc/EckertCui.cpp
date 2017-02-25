@@ -21,7 +21,7 @@ const char *const EckertCui::NAME
 const char *const EckertCui::AUTHOR
  = "(C) 2014-2017  Yuishin Kikuchi";
 const char *const EckertCui::VERSION
- = "Version Feb 03, 2017";
+ = "Version Feb 24, 2017";
 
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / CONSTRUCTER

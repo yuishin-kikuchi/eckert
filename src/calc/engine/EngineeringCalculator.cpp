@@ -21,8 +21,6 @@
 #include "OperatorsTrigonometric.h"
 #include "OperatorsTuple.h"
 
-#include <iostream>
-
 ////==--------------------------------------------------------------------====//
 // ENGINEERING CALCULATOR
 // [ Update ]

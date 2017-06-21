@@ -53,7 +53,7 @@ bool UnitConverter::convert(SpElement &dst, const SpElement &src, const unsigned
 ////==--------------------------------------------------------------------====//
 // UNIT CONVERTER / KEYWORD TO UNIT
 // [ Update ]
-// Dec 22, 2016
+// Mar 06, 2017
 //====--------------------------------------------------------------------==////
 const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	// LEN
@@ -128,6 +128,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "cm3", VOL_CM3 },
 	{ "mm3", VOL_MM3 },
 	{ "l", VOL_L },
+	{ "dl", VOL_DL },
 	{ "kl", VOL_KL },
 	{ "ml", VOL_ML },
 	{ "yd3", VOL_YD3 },
@@ -146,6 +147,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "/cm3", VOLI_CM3 },
 	{ "/mm3", VOLI_MM3 },
 	{ "/l", VOLI_L },
+	{ "/dl", VOLI_DL },
 	{ "/kl", VOLI_KL },
 	{ "/ml", VOLI_ML },
 	{ "/yd3", VOLI_YD3 },
@@ -249,7 +251,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 ////==--------------------------------------------------------------------====//
 // UNIT CONVERTER / KEYWORD TO UNIT
 // [ Update ]
-// Dec 22, 2016
+// Mar 06, 2017
 //====--------------------------------------------------------------------==////
 const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	// LENGTH
@@ -324,6 +326,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ VOL_CM3, { "cm3", U_VOLUME, GEN_RATIONAL2(1, 1000000LL), GEN_INTEGER(0) } },
 	{ VOL_MM3, { "mm3", U_VOLUME, GEN_RATIONAL2(1, 1000000000LL), GEN_INTEGER(0) } },
 	{ VOL_L, { "L", U_VOLUME, GEN_RATIONAL2(1, 1000), GEN_INTEGER(0) } },
+	{ VOL_DL, { "dL", U_VOLUME, GEN_RATIONAL2(1, 10000), GEN_INTEGER(0) } },
 	{ VOL_KL, { "kL", U_VOLUME, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ VOL_ML, { "mL", U_VOLUME, GEN_RATIONAL2(1, 1000000), GEN_INTEGER(0) } },
 	{ VOL_YD3, { "yd3", U_VOLUME, GEN_RATIONAL2(1493271207LL, 1953125000LL), GEN_INTEGER(0) } },
@@ -342,6 +345,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ VOLI_CM3, { "/cm3", U_VOLUME_I, GEN_INTEGER(1000000), GEN_INTEGER(0) } },
 	{ VOLI_MM3, { "/mm3", U_VOLUME_I, GEN_INTEGER(1000000000LL), GEN_INTEGER(0) } },
 	{ VOLI_L, { "/L", U_VOLUME_I, GEN_INTEGER(1000), GEN_INTEGER(0) } },
+	{ VOLI_DL, { "/dL", U_VOLUME_I, GEN_INTEGER(10000), GEN_INTEGER(0) } },
 	{ VOLI_KL, { "/kL", U_VOLUME_I, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ VOLI_ML, { "/mL", U_VOLUME_I, GEN_INTEGER(1000000), GEN_INTEGER(0) } },
 	{ VOLI_YD3, { "/yd3", U_VOLUME_I, GEN_RATIONAL2(1953125000LL, 1493271207LL), GEN_INTEGER(0) } },

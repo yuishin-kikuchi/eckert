@@ -459,7 +459,7 @@ class MaxNormOperator : public GeneralOperator {
 					return true;
 				}
 				checkFlags(stackEngine);
-				stack.drop(2);
+				stack.drop(1);
 				stack.push(p_etemp);
 			}
 			else {

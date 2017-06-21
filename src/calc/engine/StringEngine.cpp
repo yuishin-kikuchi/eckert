@@ -7,8 +7,6 @@
 #include <string>
 #include <cmath>
 
-#include <iostream>
-
 namespace engine {
 
 ////==--------------------------------------------------------------------====//

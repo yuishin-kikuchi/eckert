@@ -6,16 +6,16 @@
 //============================================================================//
 //====--------------------------------------------------------------------==////
 
+#include "main.h"
+#include "calc/EckertCui.h"
+#include "com/CommandlineFlags.h"
 #include <iostream>
 #include <string>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-#include "main.h"
-#include "calc/EckertCui.h"
-#include "com/CommandlineFlags.h"
 
-const static unsigned int BREAK_LINES = 5;
+static const unsigned int BREAK_LINES = 5;
 
 int main(int argc, char **argv) {
 	////==--------

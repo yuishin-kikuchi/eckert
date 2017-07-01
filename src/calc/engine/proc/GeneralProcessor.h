@@ -96,6 +96,9 @@ class GeneralProcessor : public EckertProcessor {
 		SpElement toWord(const SpElement &p_ex);
 		SpElement toDword(const SpElement &p_ex);
 		SpElement toQword(const SpElement &p_ex);
+		SpElement toSWord(const SpElement &p_ex);
+		SpElement toSDword(const SpElement &p_ex);
+		SpElement toSQword(const SpElement &p_ex);
 		//==  Standard functions  ==//
 		SpElement inc(const SpElement &p_ex);
 		SpElement dec(const SpElement &p_ex);

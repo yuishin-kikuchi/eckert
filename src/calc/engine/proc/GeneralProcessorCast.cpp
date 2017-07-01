@@ -422,7 +422,7 @@ SpElement GeneralProcessor::toDword(const SpElement &p_ex) {
 ////==--------------------------------------------------------------------====//
 // ECKERT PROCESSOR / CAST INTO QWORD
 // [ description ]
-// Convert into Dword
+// Convert into Qword
 // [ Update ]
 // May 22, 2016
 //====--------------------------------------------------------------------==////
@@ -469,6 +469,195 @@ SpElement GeneralProcessor::toQword(const SpElement &p_ex) {
 		}
 		default:
 			//==  to_qword(Unexpected)  ==//
+			throw BadArgument("BAD_TYPE", __FUNCTION__);
+	}
+	return p_etemp;
+}
+
+////==--------------------------------------------------------------------====//
+// ECKERT PROCESSOR / CAST INTO WORD
+// [ description ]
+// Convert into Word (Sign extend)
+// [ Update ]
+// Jul 01, 2017
+//====--------------------------------------------------------------------==////
+SpElement GeneralProcessor::toSWord(const SpElement &p_ex) {
+	//==  NULL POINTER CHECK  ==//
+	if (nullptr == p_ex) {
+		throw TechnicalError("NULLPTR", __FUNCTION__);
+	}
+	SpElement p_etemp;
+	switch (p_ex->getType()) {
+		case Element::INTEGER: {
+			//==  to_signed_word(INTEGER)  ==//
+			auto int_x = GET_INTEGER_DATA(p_ex);
+			p_etemp = GEN_WORD((int16_t)int_x);
+			break;
+		}
+		case Element::BOOLEAN: {
+			//==  to_signed_word(BOOLEAN)  ==//
+			auto bool_x = GET_BOOLEAN_DATA(p_ex);
+			p_etemp = GEN_WORD(bool_x ? 1 : 0);
+			break;
+		}
+		case Element::BINARY8: {
+			//==  to_signed_word(BINARY8)  ==//
+			uint8_t byte_x = GET_BYTE_DATA(p_ex);
+			uint16_t dat = byte_x;
+			if (dat & 0x80) {
+				dat = 0xFF00 | dat;
+			}
+			p_etemp = GEN_WORD(dat);
+			break;
+		}
+		case Element::BINARY16: {
+			//==  to_signed_word(BINARY16)  ==//
+			return p_etemp;
+		}
+		case Element::BINARY32: {
+			//==  to_signed_word(BINARY32)  ==//
+			uint32_t dword_x = GET_DWORD_DATA(p_ex);
+			p_etemp = GEN_WORD((int16_t)dword_x);
+			break;
+		}
+		case Element::BINARY64: {
+			//==  to_signed_word(BINARY64)  ==//
+			uint64_t qword_x = GET_QWORD_DATA(p_ex);
+			p_etemp = GEN_WORD((uint16_t)qword_x);
+			break;
+		}
+		default:
+			//==  to_signed_word(Unexpected)  ==//
+			throw BadArgument("BAD_TYPE", __FUNCTION__);
+	}
+	return p_etemp;
+}
+
+////==--------------------------------------------------------------------====//
+// ECKERT PROCESSOR / CAST INTO DWORD
+// [ description ]
+// Convert into Dword (Sign extend)
+// [ Update ]
+// Jul 01, 2017
+//====--------------------------------------------------------------------==////
+SpElement GeneralProcessor::toSDword(const SpElement &p_ex) {
+	//==  NULL POINTER CHECK  ==//
+	if (nullptr == p_ex) {
+		throw TechnicalError("NULLPTR", __FUNCTION__);
+	}
+	SpElement p_etemp;
+	switch (p_ex->getType()) {
+		case Element::INTEGER: {
+			//==  to_signed_dword(INTEGER)  ==//
+			auto int_x = GET_INTEGER_DATA(p_ex);
+			p_etemp = GEN_DWORD((uint32_t)int_x);
+			break;
+		}
+		case Element::BOOLEAN: {
+			//==  to_signed_dword(BOOLEAN)  ==//
+			auto bool_x = GET_BOOLEAN_DATA(p_ex);
+			p_etemp = GEN_DWORD(bool_x ? 1 : 0);
+			break;
+		}
+		case Element::BINARY8: {
+			//==  to_signed_dword(BINARY8)  ==//
+			uint8_t byte_x = GET_BYTE_DATA(p_ex);
+			uint32_t dat = byte_x;
+			if (dat & 0x80) {
+				dat = 0xFFFFFF00 | dat;
+			}
+			p_etemp = GEN_DWORD(dat);
+			break;
+		}
+		case Element::BINARY16: {
+			//==  to_signed_dword(BINARY16)  ==//
+			uint16_t word_x = GET_WORD_DATA(p_ex);
+			uint32_t dat = word_x;
+			if (dat & 0x8000) {
+				dat = 0xFFFF0000 | dat;
+			}
+			p_etemp = GEN_DWORD(dat);
+			break;
+		}
+		case Element::BINARY32: {
+			//==  to_signed_dword(BINARY32)  ==//
+			return p_etemp;
+		}
+		case Element::BINARY64: {
+			//==  to_signed_dword(BINARY64)  ==//
+			uint64_t qword_x = GET_QWORD_DATA(p_ex);
+			p_etemp = GEN_DWORD((uint32_t)qword_x);
+			break;
+		}
+		default:
+			//==  to_signed_dword(Unexpected)  ==//
+			throw BadArgument("BAD_TYPE", __FUNCTION__);
+	}
+	return p_etemp;
+}
+
+////==--------------------------------------------------------------------====//
+// ECKERT PROCESSOR / CAST INTO QWORD
+// [ description ]
+// Convert into Qword (Sign extend)
+// [ Update ]
+// Jul 01, 2017
+//====--------------------------------------------------------------------==////
+SpElement GeneralProcessor::toSQword(const SpElement &p_ex) {
+	//==  NULL POINTER CHECK  ==//
+	if (nullptr == p_ex) {
+		throw TechnicalError("NULLPTR", __FUNCTION__);
+	}
+	SpElement p_etemp;
+	switch (p_ex->getType()) {
+		case Element::INTEGER: {
+			//==  to_signed_qword(INTEGER)  ==//
+			auto int_x = GET_INTEGER_DATA(p_ex);
+			p_etemp = GEN_QWORD((int32_t)int_x);
+			break;
+		}
+		case Element::BOOLEAN: {
+			//==  to_signed_qword(BOOLEAN)  ==//
+			auto bool_x = GET_BOOLEAN_DATA(p_ex);
+			p_etemp = GEN_QWORD(bool_x ? 1 : 0);
+			break;
+		}
+		case Element::BINARY8: {
+			//==  to_signed_qword(BINARY8)  ==//
+			uint8_t byte_x = GET_BYTE_DATA(p_ex);
+			uint64_t dat = byte_x;
+			if (dat & 0x80) {
+				dat = 0xFFFFFFFFFFFFFF00 | dat;
+			}
+			p_etemp = GEN_QWORD(dat);
+			break;
+		}
+		case Element::BINARY16: {
+			//==  to_signed_qword(BINARY16)  ==//
+			uint16_t word_x = GET_WORD_DATA(p_ex);
+			uint64_t dat = word_x;
+			if (dat & 0x8000) {
+				dat = 0xFFFFFFFFFFFF0000 | dat;
+			}
+			p_etemp = GEN_QWORD(dat);
+			break;
+		}
+		case Element::BINARY32: {
+			//==  to_signed_qword(BINARY32)  ==//
+			uint32_t dword_x = GET_DWORD_DATA(p_ex);
+			uint64_t dat = dword_x;
+			if (dat & 0x80000000) {
+				dat = 0xFFFFFFFF00000000 | dat;
+			}
+			p_etemp = GEN_QWORD(dat);
+			break;
+		}
+		case Element::BINARY64: {
+			//==  to_signed_qword(BINARY64)  ==//
+			return p_etemp;
+		}
+		default:
+			//==  to_signed_qword(Unexpected)  ==//
 			throw BadArgument("BAD_TYPE", __FUNCTION__);
 	}
 	return p_etemp;

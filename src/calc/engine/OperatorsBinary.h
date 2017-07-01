@@ -4,6 +4,8 @@
 #include "GeneralOperator.h"
 #include "proc/ElementMacros.h"
 
+#define _MAX_SHIFT (63)
+
 namespace engine {
 
 class NotOperator : public GeneralOperator {
@@ -296,6 +298,144 @@ class ShiftArithmeticRightOperator : public GeneralOperator {
 		}
 		virtual std::size_t getRequiredCount() const {
 			return 1;
+		}
+};
+
+class ShiftLeftCountOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_SHLC");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				std::size_t count = 0;
+				if (!getSizetValue(count, p_ex)) {
+					if (count > _MAX_SHIFT) {
+						stackEngine.setErrorMessage("TOO_LRGE");
+						return true;
+					}
+					SpElement p_etemp = p_ey;
+					try {
+						for (std::size_t ucnt = 0; ucnt < count; ++ucnt) {
+							p_etemp = proc.shiftLeft(p_etemp);
+						}
+					}
+					catch (BadArgument &ba) {
+						stackEngine.setErrorMessage(ba.what());
+						return true;
+					}
+					checkFlags(stackEngine);
+					stack.drop(2);
+					stack.push(p_etemp);
+				}
+				else {
+					stackEngine.setErrorMessage("NOT_PINT");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
+		}
+};
+
+class ShiftRightCountOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_SHRC");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				std::size_t count = 0;
+				if (!getSizetValue(count, p_ex)) {
+					if (count > _MAX_SHIFT) {
+						stackEngine.setErrorMessage("TOO_LRGE");
+						return true;
+					}
+					SpElement p_etemp = p_ey;
+					try {
+						for (std::size_t ucnt = 0; ucnt < count; ++ucnt) {
+							p_etemp = proc.shiftRight(p_etemp);
+						}
+					}
+					catch (BadArgument &ba) {
+						stackEngine.setErrorMessage(ba.what());
+						return true;
+					}
+					checkFlags(stackEngine);
+					stack.drop(2);
+					stack.push(p_etemp);
+				}
+				else {
+					stackEngine.setErrorMessage("NOT_PINT");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
+		}
+};
+
+class ShiftArithmeticRightCountOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_SARC");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ey = stack.fetch(1);
+				SpElement p_ex = stack.fetch(0);
+				std::size_t count = 0;
+				if (!getSizetValue(count, p_ex)) {
+					if (count > _MAX_SHIFT) {
+						stackEngine.setErrorMessage("TOO_LRGE");
+						return true;
+					}
+					SpElement p_etemp = p_ey;
+					try {
+						for (std::size_t ucnt = 0; ucnt < count; ++ucnt) {
+							p_etemp = proc.shiftArithmeticRight(p_etemp);
+						}
+					}
+					catch (BadArgument &ba) {
+						stackEngine.setErrorMessage(ba.what());
+						return true;
+					}
+					checkFlags(stackEngine);
+					stack.drop(2);
+					stack.push(p_etemp);
+				}
+				else {
+					stackEngine.setErrorMessage("NOT_PINT");
+					return true;
+				}
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 2;
 		}
 };
 

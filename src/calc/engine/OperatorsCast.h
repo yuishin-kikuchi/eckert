@@ -262,6 +262,102 @@ class ToQwordOperator : public GeneralOperator {
 		}
 };
 
+class ToSWordOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_CSWD");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.toSWord(p_ex);
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
+class ToSDwordOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_CSDW");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.toSDword(p_ex);
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
+class ToSQwordOperator : public GeneralOperator {
+	public:
+		virtual bool operate(StackEngine &stackEngine) const {
+			auto &proc = getGeneralProcessor();
+			proc.resetFlags();
+			stackEngine.setCommandMessage("OP_CSQW");
+			stackEngine.setErrorMessage("NO_ERROR");
+			if (hasEnoughItems(stackEngine)) {
+				auto &stack = stackEngine.refExStack();
+				SpElement p_ex = stack.fetch(0);
+				SpElement p_etemp;
+				try {
+					p_etemp = proc.toSQword(p_ex);
+				}
+				catch (BadArgument &ba) {
+					stackEngine.setErrorMessage(ba.what());
+					return true;
+				}
+				checkFlags(stackEngine);
+				stack.drop(1);
+				stack.push(p_etemp);
+			}
+			else {
+				return true;
+			}
+			return false;
+		}
+		virtual std::size_t getRequiredCount() const {
+			return 1;
+		}
+};
+
 } // namespace engine
 
 #endif // _OPERATORS_CAST_H_

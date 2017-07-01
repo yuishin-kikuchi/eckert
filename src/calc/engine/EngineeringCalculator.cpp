@@ -24,7 +24,7 @@
 ////==--------------------------------------------------------------------====//
 // ENGINEERING CALCULATOR
 // [ Update ]
-// Jan 13, 2017
+// Jul 01, 2017
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -85,6 +85,9 @@ void EngineeringCalculator::init() {
 	addOperator(">>", StackOperatorPtr(new ShiftRightOperator()));
 	addOperator("sar", StackOperatorPtr(new ShiftArithmeticRightOperator()));
 	addOperator(">>>", StackOperatorPtr(new ShiftArithmeticRightOperator()));
+	addOperator("shlc", StackOperatorPtr(new ShiftLeftCountOperator()));
+	addOperator("shrc", StackOperatorPtr(new ShiftRightCountOperator()));
+	addOperator("sarc", StackOperatorPtr(new ShiftArithmeticRightCountOperator()));
 	addOperator("sbl", StackOperatorPtr(new ShiftByteLeftOperator()));
 	addOperator("sbr", StackOperatorPtr(new ShiftByteRightOperator()));
 	addOperator("snl", StackOperatorPtr(new ShiftNibbleLeftOperator()));
@@ -100,6 +103,9 @@ void EngineeringCalculator::init() {
 	addOperator("toword", StackOperatorPtr(new ToWordOperator()));
 	addOperator("todword", StackOperatorPtr(new ToDwordOperator()));
 	addOperator("toqword", StackOperatorPtr(new ToQwordOperator()));
+	addOperator("tosword", StackOperatorPtr(new ToSWordOperator()));
+	addOperator("tosdword", StackOperatorPtr(new ToSDwordOperator()));
+	addOperator("tosqword", StackOperatorPtr(new ToSQwordOperator()));
 	// clear
 	addOperator("ac", StackOperatorPtr(new AllClearOperator()));
 	addOperator("clear", StackOperatorPtr(new StackClearOperator()));

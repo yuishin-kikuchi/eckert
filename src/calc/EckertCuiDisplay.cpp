@@ -477,7 +477,7 @@ void EckertCui::showRegister(const DisplayHint &dh) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / SHOW HEADER
 // [ Update ]
-// Feb 03, 2016
+// Jul 10, 2017
 //====--------------------------------------------------------------------==////
 void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 	const char *head_splitter = ",  ";
@@ -555,7 +555,11 @@ void EckertCui::showHeader(const EckertCui::DisplayHint &dh) {
 		std::cout << "[Reg] ";
 	}
 	if (_strEngine.getEulerFlag()) {
-		std::cout << "[Eul] ";
+		std::cout << "[Eul";
+		if (_strEngine.getPiRadianFlag()) {
+			std::cout << "(Pi)";
+		}
+		std::cout << "] ";
 	}
 	switch (_strEngine.getFractionalDisplayMode()) {
 		case engine::StringEngine::FractionalDisplayMode::MIXED:

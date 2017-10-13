@@ -79,7 +79,7 @@ StringEngine::StringEngine() {
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / INITIALIZER
 // [ Update ]
-// Dec 23, 2016
+// Jul 10, 2016
 //====--------------------------------------------------------------------==////
 void StringEngine::init() {
 	_fcfg.init();
@@ -88,6 +88,7 @@ void StringEngine::init() {
 	_frdisp = FractionalDisplayMode::PROVISIONAL;
 	_nbase = NumberBaseMode::HEXADECIMAL;
 	_euler = false;
+	_piRad = false;
 }
 
 ////==--------------------------------------------------------------------====//
@@ -682,10 +683,15 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN: {
 					if (num > 0) {
-						os << complexArgumentToString(cfg, GEN_INTEGER(0));
+						os << integerToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						if (_piRad) {
+							os << " Pi";
+						}
+						else {
+							os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						}
 					}
 					break;
 				}
@@ -750,7 +756,12 @@ std::string StringEngine::floatingToString(const CalculationConfig &cfg, const S
 						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						if (_piRad) {
+							os << " Pi";
+						}
+						else {
+							os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						}
 					}
 					break;
 				case CalculationConfig::AngleMode::DEGREE:
@@ -836,7 +847,12 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 						os << complexArgumentToString(cfg, GEN_INTEGER(0));
 					}
 					else {
-						os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						if (_piRad) {
+							os << " Pi";
+						}
+						else {
+							os << complexArgumentToString(cfg, GEN_FLOATING(GeneralProcessor::PI));
+						}
 					}
 					break;
 				case CalculationConfig::AngleMode::DEGREE:
@@ -986,7 +1002,7 @@ std::string StringEngine::complexToReImString(const CalculationConfig &cfg, cons
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / COMPLEX TO STRING (r exp(i arg))
 // [ Update ]
-// Nov 11, 2016
+// Jul 10, 2017
 //====--------------------------------------------------------------------==////
 std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
@@ -1014,6 +1030,9 @@ std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, con
 		bool flag_backup = _euler;
 		_euler = false;
 		bool is_neg = proc.isNegative(argument) || proc.isNegativeZero(argument);
+		if (_piRad) {
+			argument = proc.div(argument, proc.pi());
+		}
 		os << elementToString(cfg, absolute);
 		os << " exp(" << (is_neg ? "-i" : "+i");
 		os << complexArgumentToString(cfg, proc.abs(argument));
@@ -1022,6 +1041,9 @@ std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, con
 				os << 'd';
 				break;
 			case CalculationConfig::AngleMode::RADIAN:
+				if (_piRad) {
+					os << " Pi";
+				}
 				break;
 			case CalculationConfig::AngleMode::GRADE:
 				os << 'g';

@@ -853,7 +853,7 @@ EckertCui::operateRegister(const std::string &token) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / CHANGE CALCULATOR MODE
 // [ Update ]
-// Dec 18, 2016
+// Jul 10, 2017
 //====--------------------------------------------------------------------==////
 EckertCui::ReturnCode
 EckertCui::changeCalculatorMode(const std::string &token) {
@@ -954,6 +954,17 @@ EckertCui::changeCalculatorMode(const std::string &token) {
 		else {
 			_strEngine.setEulerFlag(true);
 			stackEngine.setCommandMessage("M_EON");
+		}
+		return ReturnCode::SUCCESS;
+	}
+	else if (!token.compare("pirad") || !token.compare("prad")) {
+		if (_strEngine.getPiRadianFlag()) {
+			_strEngine.setPiRadianFlag(false);
+			stackEngine.setCommandMessage("M_POFF");
+		}
+		else {
+			_strEngine.setPiRadianFlag(true);
+			stackEngine.setCommandMessage("M_PON");
 		}
 		return ReturnCode::SUCCESS;
 	}

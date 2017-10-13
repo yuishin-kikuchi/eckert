@@ -156,6 +156,8 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "M_AON", "APPROX display enabled" },
 	{ "M_EOFF", "EULER display disabled" },
 	{ "M_EON", "EULER display enabled" },
+	{ "M_POFF", "PI-RADIAN ARGUMENT display disabled" },
+	{ "M_PON", "PI-RADIAN ARGUMENT display enabled" },
 	{ "M_TOFF", "TYPE display disabled" },
 	{ "M_TLNG", "TYPE display enabled" },
 	{ "M_TSHT", "SHORT TYPE display enabled" },

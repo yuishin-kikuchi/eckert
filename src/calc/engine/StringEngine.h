@@ -8,7 +8,7 @@
 ////==--------------------------------------------------------------------====//
 // ECKERT ENGINE - STRING ENGINE
 // [ Update ]
-// Nov 30, 2016
+// Jul 10, 2017
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -50,6 +50,7 @@ class StringEngine {
 		NumberBaseMode _nbase;
 		FloatingDisplayConfig _fcfg;
 		mutable bool _euler;
+		bool _piRad;
 		std::string complexArgumentToString(const CalculationConfig &cfg, const SpElement &elm) const;
 		std::string errorToString(const CalculationConfig &cfg, const SpElement &elm) const;
 		std::string estringToString(const CalculationConfig &cfg, const SpElement &elm) const;
@@ -121,6 +122,12 @@ class StringEngine {
 		}
 		bool getEulerFlag() const {
 			return _euler;
+		}
+		void setPiRadianFlag(const bool &flag) {
+			_piRad = flag;
+		}
+		bool getPiRadianFlag() const {
+			return _piRad;
 		}
 };
 

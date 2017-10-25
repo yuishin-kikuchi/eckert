@@ -308,8 +308,8 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "OP_GCD", "GREATEST COMMON DIVISOR" },
 	{ "OP_LCM", "LEAST COMMON MULTIPLE" },
 	{ "OP_FACT", "FACTORIAL X!" },
-	{ "OP_PERM", "PERMUTATION yPx" },
-	{ "OP_COMB", "COMBINATION yCx" },
+	{ "OP_PERM", "PERMUTATIONS yPx" },
+	{ "OP_COMB", "COMBINATIONS yCx (binomial coefficient)" },
 	// exponent, logarithm
 	{ "OP_SQ", "SQUARE" },
 	{ "OP_SQRT", "SQUARE ROOT" },

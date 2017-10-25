@@ -1002,7 +1002,7 @@ std::string StringEngine::complexToReImString(const CalculationConfig &cfg, cons
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / COMPLEX TO STRING (r exp(i arg))
 // [ Update ]
-// Jul 10, 2017
+// Oct 18, 2017
 //====--------------------------------------------------------------------==////
 std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
@@ -1030,22 +1030,25 @@ std::string StringEngine::complexToEulerString(const CalculationConfig &cfg, con
 		bool flag_backup = _euler;
 		_euler = false;
 		bool is_neg = proc.isNegative(argument) || proc.isNegativeZero(argument);
-		if (_piRad) {
-			argument = proc.div(argument, proc.pi());
-		}
 		os << elementToString(cfg, absolute);
 		os << " exp(" << (is_neg ? "-i" : "+i");
-		os << complexArgumentToString(cfg, proc.abs(argument));
 		switch (cfg.getAngleMode()) {
 			case CalculationConfig::AngleMode::DEGREE:
+				os << complexArgumentToString(cfg, proc.abs(argument));
 				os << 'd';
 				break;
 			case CalculationConfig::AngleMode::RADIAN:
 				if (_piRad) {
+					argument = proc.div(argument, proc.pi());
+					os << complexArgumentToString(cfg, proc.abs(argument));
 					os << " Pi";
+				}
+				else {
+					os << complexArgumentToString(cfg, proc.abs(argument));
 				}
 				break;
 			case CalculationConfig::AngleMode::GRADE:
+				os << complexArgumentToString(cfg, proc.abs(argument));
 				os << 'g';
 				break;
 			default:

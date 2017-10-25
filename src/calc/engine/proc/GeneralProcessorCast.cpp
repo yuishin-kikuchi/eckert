@@ -424,7 +424,7 @@ SpElement GeneralProcessor::toDword(const SpElement &p_ex) {
 // [ description ]
 // Convert into Qword
 // [ Update ]
-// May 22, 2016
+// Oct 19, 2017
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::toQword(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -436,7 +436,7 @@ SpElement GeneralProcessor::toQword(const SpElement &p_ex) {
 		case Element::INTEGER: {
 			//==  to_qword(INTEGER)  ==//
 			auto int_x = GET_INTEGER_DATA(p_ex);
-			p_etemp = GEN_QWORD((int32_t)int_x);
+			p_etemp = GEN_QWORD((int64_t)int_x);
 			break;
 		}
 		case Element::BOOLEAN: {
@@ -601,7 +601,7 @@ SpElement GeneralProcessor::toSDword(const SpElement &p_ex) {
 // [ description ]
 // Convert into Qword (Sign extend)
 // [ Update ]
-// Jul 01, 2017
+// Oct 19, 2017
 //====--------------------------------------------------------------------==////
 SpElement GeneralProcessor::toSQword(const SpElement &p_ex) {
 	//==  NULL POINTER CHECK  ==//
@@ -613,7 +613,7 @@ SpElement GeneralProcessor::toSQword(const SpElement &p_ex) {
 		case Element::INTEGER: {
 			//==  to_signed_qword(INTEGER)  ==//
 			auto int_x = GET_INTEGER_DATA(p_ex);
-			p_etemp = GEN_QWORD((int32_t)int_x);
+			p_etemp = GEN_QWORD((int64_t)int_x);
 			break;
 		}
 		case Element::BOOLEAN: {

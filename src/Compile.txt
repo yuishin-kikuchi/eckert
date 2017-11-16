@@ -1,10 +1,10 @@
 ECKERT is coded in C++11
 
 Visual Studio / Visual C++  32bit:
-cl /W3 /Ot /EHsc /MP /Feeckert86.exe main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp
+cl /W3 /Ot /EHsc /MP /Fe"eckert86.exe" main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp
 
 Visual Studio / Visual C++  64bit:
-cl /W3 /Ot /EHsc /MP /Feeckert64.exe main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp
+cl /W3 /Ot /EHsc /MP /Fe"eckert64.exe" main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp
 
 GNU Compiler GCC
-g++ -Wall -Werror -O3 -o eckert -std=c++11 main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp
+g++ -Wall -Werror -O3 -o"eckert" -std=c++11 main.cpp com/*.cpp calc/*.cpp calc/engine/*.cpp calc/engine/proc/*.cpp calc/engine/proc/base/*.cpp calc/engine/proc/base/core/*.cpp calc/ncheck/*.cpp calc/util/*.cpp

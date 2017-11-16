@@ -820,7 +820,7 @@ catch (StringConverter::Failure &) {
 ////==--------------------------------------------------------------------====//
 // ECKERT PARSER / GENERATE CONSTANT ELEMENT FROM STRING
 // [ Update ]
-// Dec 03, 2016
+// Nov 16, 2017
 //====--------------------------------------------------------------------==////
 EckertParser::ReturnCode
 EckertParser::genSpElementConstant(
@@ -835,7 +835,7 @@ EckertParser::genSpElementConstant(
 		const auto &pair = constantTable.at(lower_token);
 		r_set = pair.elm;
 		stackEngine.setCommandMessage("PUSH_C");
-		stackEngine.setAdditionalMessage(str);
+		stackEngine.setAdditionalMessage(lower_token);
 		return EckertParser::ReturnCode::SUCCESS;
 	}
 	else {

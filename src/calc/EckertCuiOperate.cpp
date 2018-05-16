@@ -1034,7 +1034,7 @@ EckertCui::changeCalculatorMode(const std::string &token) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / OPERATE REGISTER
 // [ Update ]
-// Jan 26, 2017
+// May 17, 2018
 //====--------------------------------------------------------------------==////
 EckertCui::ReturnCode
 EckertCui::changeCalculatorPages(const std::string &token) {
@@ -1076,7 +1076,7 @@ EckertCui::changeCalculatorPages(const std::string &token) {
 	else if (!token.compare("regnext") || !token.compare("rn")) {
 		stackEngine.setCommandMessage("RP_NXT");
 		if (_paginator.registerNext(registerSize)) {
-			stackEngine.setCommandMessage("R_FNL");
+			stackEngine.setErrorMessage("R_FNL");
 			return ReturnCode::FAILURE;
 		}
 		else {
@@ -1086,7 +1086,7 @@ EckertCui::changeCalculatorPages(const std::string &token) {
 	else if (!token.compare("regprev") || !token.compare("rp")) {
 		stackEngine.setCommandMessage("RP_PRV");
 		if (_paginator.registerPrev(registerSize)) {
-			stackEngine.setCommandMessage("R_FST");
+			stackEngine.setErrorMessage("R_FST");
 			return ReturnCode::FAILURE;
 		}
 		else {

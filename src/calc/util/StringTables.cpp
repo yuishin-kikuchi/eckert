@@ -188,7 +188,7 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "PUSH_C", "PUSH Constant" },
 	{ "PUSH_S", "PUSH" },
 	{ "OP_DUP", "DUPLICATE" },
-	{ "OP_SWAP", "SWAP Y and X" },
+	{ "OP_SWAP", "SWAP Y with X" },
 	{ "OP_OVER", "OVER" },
 	{ "OP_DROP", "DROP" },
 	{ "OP_SROT", "ROTATE" },

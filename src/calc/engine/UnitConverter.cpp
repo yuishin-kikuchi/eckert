@@ -53,7 +53,7 @@ bool UnitConverter::convert(SpElement &dst, const SpElement &src, const unsigned
 ////==--------------------------------------------------------------------====//
 // UNIT CONVERTER / KEYWORD TO UNIT
 // [ Update ]
-// Mar 06, 2017
+// May 19, 2018
 //====--------------------------------------------------------------------==////
 const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	// LEN
@@ -162,11 +162,16 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "/koku", VOLI_KOKU },
 	// TIME
 	{ "sec", TIM_SEC },
+	{ "s", TIM_SEC },
 	{ "min", TIM_MIN },
 	{ "hour", TIM_HOUR },
+	{ "h", TIM_HOUR },
 	{ "day", TIM_DAY },
+	{ "d", TIM_DAY },
 	{ "week", TIM_WEEK },
+	{ "wk", TIM_WEEK },
 	{ "year", TIM_YEAR },
+	{ "yr", TIM_YEAR },
 	{ "gyear", TIM_GYEAR },
 	{ "jyear", TIM_JYEAR },
 	// TIME INV
@@ -255,7 +260,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 //====--------------------------------------------------------------------==////
 const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	// LENGTH
-	{ LEN_M, { "metre", U_LENGTH, GEN_INTEGER(1), GEN_INTEGER(0) } },
+	{ LEN_M, { "m", U_LENGTH, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ LEN_KM, { "km", U_LENGTH, GEN_INTEGER(1000), GEN_INTEGER(0) } },
 	{ LEN_CM, { "cm", U_LENGTH, GEN_RATIONAL2(1, 100), GEN_INTEGER(0) } },
 	{ LEN_MM, { "mm", U_LENGTH, GEN_RATIONAL2(1, 1000), GEN_INTEGER(0) } },
@@ -272,7 +277,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ LEN_CHOU, { "chou", U_LENGTH, GEN_RATIONAL2(1200, 11), GEN_INTEGER(0) } },
 	{ LEN_RI, { "ri", U_LENGTH, GEN_RATIONAL2(43200, 11), GEN_INTEGER(0) } },
 	// LENGTH INV
-	{ LENI_M, { "/metre", U_LENGTH_I, GEN_INTEGER(1), GEN_INTEGER(0) } },
+	{ LENI_M, { "/m", U_LENGTH_I, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ LENI_KM, { "/km", U_LENGTH_I, GEN_RATIONAL2(1, 1000), GEN_INTEGER(0) } },
 	{ LENI_CM, { "/cm", U_LENGTH_I, GEN_INTEGER(100), GEN_INTEGER(0) } },
 	{ LENI_MM, { "/mm", U_LENGTH_I, GEN_INTEGER(1000), GEN_INTEGER(0) } },
@@ -281,7 +286,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ LENI_FT, { "/feet", U_LENGTH_I, GEN_RATIONAL2(1250, 381), GEN_INTEGER(0) } },
 	{ LENI_IN, { "/inch", U_LENGTH_I, GEN_RATIONAL2(5000, 127), GEN_INTEGER(0) } },
 	{ LENI_MI, { "/mile", U_LENGTH_I, GEN_RATIONAL2(125, 201168), GEN_INTEGER(0) } },
-	{ LENI_FATH, { "/fathom", U_LENGTH_I, GEN_RATIONAL2(625, 1143), GEN_INTEGER(0) } },
+	{ LENI_FATH, { "/fath", U_LENGTH_I, GEN_RATIONAL2(625, 1143), GEN_INTEGER(0) } },
 	{ LENI_SHAKU, { "/shaku", U_LENGTH_I, GEN_RATIONAL2(33, 10), GEN_INTEGER(0) } },
 	{ LENI_SUN, { "/sun", U_LENGTH_I, GEN_INTEGER(33), GEN_INTEGER(0) } },
 	{ LENI_KEN, { "/ken", U_LENGTH_I, GEN_RATIONAL2(11, 20), GEN_INTEGER(0) } },
@@ -397,7 +402,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ VEL_IPS, { "ips", U_VEL, GEN_RATIONAL2(127, 5000), GEN_INTEGER(0) } },
 	{ VEL_FPS, { "fps", U_VEL, GEN_RATIONAL2(381, 1250), GEN_INTEGER(0) } },
 	{ VEL_MPH, { "mph", U_VEL, GEN_RATIONAL2(1397, 3125), GEN_INTEGER(0) } },
-	{ VEL_KN, { "knot", U_VEL, GEN_RATIONAL2(463, 900), GEN_INTEGER(0) } },
+	{ VEL_KN, { "kn", U_VEL, GEN_RATIONAL2(463, 900), GEN_INTEGER(0) } },
 	// ACCELERATION
 	{ ACL_MPS2, { "m/s2", U_ACCEL, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ ACL_KMPHPS, { "km/h/s", U_ACCEL, GEN_RATIONAL2(5, 18), GEN_INTEGER(0) } },
@@ -407,12 +412,12 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ ACL_MPHPS, { "mph/s", U_ACCEL, GEN_RATIONAL2(1397, 3125), GEN_INTEGER(0) } },
 	{ ACL_KNPS, { "kn/s", U_ACCEL, GEN_RATIONAL2(463, 900), GEN_INTEGER(0) } },
 	// FORCE
-	{ FC_NEWTON, { "Newton", U_FORCE, GEN_INTEGER(1), GEN_INTEGER(0) } },
-	{ FC_DYN, { "dyne", U_FORCE, GEN_RATIONAL2(1, 100000), GEN_INTEGER(0) } },
-	{ FC_KGF, { "kg-force", U_FORCE, GEN_RATIONAL2(196133, 20000), GEN_INTEGER(0) } },
-	{ FC_GF, { "gram-force", U_FORCE, GEN_RATIONAL2(196133, 20000000), GEN_INTEGER(0) } },
+	{ FC_NEWTON, { "N", U_FORCE, GEN_INTEGER(1), GEN_INTEGER(0) } },
+	{ FC_DYN, { "dyn", U_FORCE, GEN_RATIONAL2(1, 100000), GEN_INTEGER(0) } },
+	{ FC_KGF, { "kgf", U_FORCE, GEN_RATIONAL2(196133, 20000), GEN_INTEGER(0) } },
+	{ FC_GF, { "gf", U_FORCE, GEN_RATIONAL2(196133, 20000000), GEN_INTEGER(0) } },
 	// PRESSURE
-	{ PRS_PA, { "Pascal", U_PRESS, GEN_INTEGER(1), GEN_INTEGER(0) } }, 
+	{ PRS_PA, { "P", U_PRESS, GEN_INTEGER(1), GEN_INTEGER(0) } }, 
 	{ PRS_HPA, { "hPa", U_PRESS, GEN_INTEGER(100), GEN_INTEGER(0) } },
 	{ PRS_KPA, { "kPa", U_PRESS, GEN_INTEGER(1000), GEN_INTEGER(0) } },
 	{ PRS_MPA, { "MPa", U_PRESS, GEN_INTEGER(1000000), GEN_INTEGER(0) } },
@@ -420,7 +425,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ PRS_MMHG, { "mmHg", U_PRESS, GEN_RATIONAL2(101325, 760), GEN_INTEGER(0) } },
 	{ PRS_INHG, { "inHg", U_PRESS, GEN_RATIONAL2(21164929, 6250), GEN_INTEGER(0) } },
 	// ENERGY
-	{ EN_J, { "Joule", U_ENERGY, GEN_INTEGER(1), GEN_INTEGER(0) } },
+	{ EN_J, { "J", U_ENERGY, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ EN_KJ, { "kJ", U_ENERGY, GEN_INTEGER(1000), GEN_INTEGER(0) } },
 	{ EN_MJ, { "MJ", U_ENERGY, GEN_INTEGER(1000000), GEN_INTEGER(0) } },
 	{ EN_EV, { "eV", U_ENERGY, GEN_FLOATING(1.6021766208E-19L), GEN_INTEGER(0) } },

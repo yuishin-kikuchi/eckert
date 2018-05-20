@@ -909,7 +909,6 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 					os << rtemp;
 					break;
 				case FractionalDisplayMode::MIXED: {
-					
 					auto num = rtemp.getNum();
 					auto den = rtemp.getDen();
 					if (std::abs(num) >= den) {
@@ -956,7 +955,7 @@ std::string StringEngine::complexToString(const CalculationConfig &cfg, const Sp
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / COMPLEX TO STRING (a + ib)
 // [ Update ]
-// Nov 11, 2016
+// May 20, 2018
 //====--------------------------------------------------------------------==////
 std::string StringEngine::complexToReImString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
@@ -966,6 +965,7 @@ std::string StringEngine::complexToReImString(const CalculationConfig &cfg, cons
 	SpElement imag = GET_COMPLEX_IM(elm);
 	bool is_pure_imag = false;
 	bool is_one = false;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	if (real->isType(Element::INTEGER)) {
 		if (0 == GET_INTEGER_DATA(real)) {
 			is_pure_imag = true;
@@ -989,11 +989,37 @@ std::string StringEngine::complexToReImString(const CalculationConfig &cfg, cons
 		if (!is_one) {
 			os << elementToString(cfg, proc.abs(imag));
 		}
+		else switch (fcfg.getDisplayMode()) {
+			case FloatingDisplayConfig::STANDARD:
+				break;
+			case FloatingDisplayConfig::FIXED:
+				// fall through
+			case FloatingDisplayConfig::SCIENTIFIC:
+				// fall through
+			case FloatingDisplayConfig::ENGINEERING:
+				os << elementToString(cfg, proc.abs(imag));
+				break;
+			default:
+				throw TechnicalError("Unknown floating display mode", __FUNCTION__);
+		}
 	}
 	else {
 		os << (is_pure_imag ? "i" : " + i");
 		if (!is_one) {
 			os << elementToString(cfg, proc.abs(imag));
+		}
+		else switch (fcfg.getDisplayMode()) {
+			case FloatingDisplayConfig::STANDARD:
+				break;
+			case FloatingDisplayConfig::FIXED:
+				// fall through
+			case FloatingDisplayConfig::SCIENTIFIC:
+				// fall through
+			case FloatingDisplayConfig::ENGINEERING:
+				os << elementToString(cfg, proc.abs(imag));
+				break;
+			default:
+				throw TechnicalError("Unknown floating display mode", __FUNCTION__);
 		}
 	}
 	return os.str();

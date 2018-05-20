@@ -893,7 +893,7 @@ void EckertCui::showContinuing(const char &c, const EckertCui::DisplayHint &dh) 
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / DISPLAY FULL DATA (VIEW MODE)
 // [ Update ]
-// Feb 03, 2016
+// May 20, 2018
 //====--------------------------------------------------------------------==////
 void EckertCui::displayFullData()
 try {
@@ -910,9 +910,9 @@ try {
 	//==  Display register  ==//
 	if (dh.registerFlag) {
 		bool reg_nodata = true;
-		std::cout << "----------------------" << std::endl;
-		std::cout << " HOMURA REGISTER VIEW " << std::endl;
-		std::cout << "======================" << std::endl;
+		std::cout << "------------------" << std::endl;
+		std::cout << "  REGISTERS VIEW  " << std::endl;
+		std::cout << "==================" << std::endl;
 		std::size_t scanning = dh.registerOffset;
 		for (std::size_t ucnt = 0; ucnt < dh.registerLine; ++ucnt) {
 			if (scanning < dh.registerSize) {
@@ -939,15 +939,15 @@ try {
 			++scanning;
 		}
 		if (reg_nodata) {
-			std::cout << " [!] NO DATA TO SHOW IN REGISTER" << std::endl;
+			std::cout << " [!] NO DATA TO SHOW IN REGISTERS" << std::endl;
 		}
 		std::cout << std::endl;
 	}
 	//==  Display stack  ==//
 	bool stk_nodata = true;
-	std::cout << "-------------------" << std::endl;
-	std::cout << " HOMURA STACK VIEW " << std::endl;
-	std::cout << "===================" << std::endl;
+	std::cout << "--------------" << std::endl;
+	std::cout << "  STACK VIEW  " << std::endl;
+	std::cout << "==============" << std::endl;
 	for (std::size_t ucnt = dh.stackLine; 0 != ucnt; --ucnt) {
 		if (ucnt + dh.stackOffset < dh.stackItems + 1) {
 			const auto &elm = stk.at(dh.stackItems - ucnt - dh.stackOffset);

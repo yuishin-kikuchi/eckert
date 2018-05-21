@@ -14,8 +14,8 @@ const std::map <std::string, std::string> StringTables::errorMessage = {
 	// PAGE ERROR
 	{ "S_FNL", "Final page of stack" },
 	{ "S_FST", "First page of stack" },
-	{ "R_FNL", "Final page of register" },
-	{ "R_FST", "First page of register" },
+	{ "R_FNL", "Final page of registers" },
+	{ "R_FST", "First page of registers" },
 	// HISTORY ERROR
 	{ "H_EMP", "No history" },
 	{ "H_OLD", "No older history" },

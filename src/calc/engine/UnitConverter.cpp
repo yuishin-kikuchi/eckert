@@ -417,7 +417,7 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ FC_KGF, { "kgf", U_FORCE, GEN_RATIONAL2(196133, 20000), GEN_INTEGER(0) } },
 	{ FC_GF, { "gf", U_FORCE, GEN_RATIONAL2(196133, 20000000), GEN_INTEGER(0) } },
 	// PRESSURE
-	{ PRS_PA, { "P", U_PRESS, GEN_INTEGER(1), GEN_INTEGER(0) } }, 
+	{ PRS_PA, { "Pa", U_PRESS, GEN_INTEGER(1), GEN_INTEGER(0) } }, 
 	{ PRS_HPA, { "hPa", U_PRESS, GEN_INTEGER(100), GEN_INTEGER(0) } },
 	{ PRS_KPA, { "kPa", U_PRESS, GEN_INTEGER(1000), GEN_INTEGER(0) } },
 	{ PRS_MPA, { "MPa", U_PRESS, GEN_INTEGER(1000000), GEN_INTEGER(0) } },

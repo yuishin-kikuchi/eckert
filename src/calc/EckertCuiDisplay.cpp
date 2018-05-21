@@ -910,9 +910,9 @@ try {
 	//==  Display register  ==//
 	if (dh.registerFlag) {
 		bool reg_nodata = true;
-		std::cout << "------------------" << std::endl;
-		std::cout << "  REGISTERS VIEW  " << std::endl;
-		std::cout << "==================" << std::endl;
+		std::cout << "----------------" << std::endl;
+		std::cout << " REGISTERS VIEW " << std::endl;
+		std::cout << "================" << std::endl;
 		std::size_t scanning = dh.registerOffset;
 		for (std::size_t ucnt = 0; ucnt < dh.registerLine; ++ucnt) {
 			if (scanning < dh.registerSize) {
@@ -945,9 +945,9 @@ try {
 	}
 	//==  Display stack  ==//
 	bool stk_nodata = true;
-	std::cout << "--------------" << std::endl;
-	std::cout << "  STACK VIEW  " << std::endl;
-	std::cout << "==============" << std::endl;
+	std::cout << "------------" << std::endl;
+	std::cout << " STACK VIEW " << std::endl;
+	std::cout << "============" << std::endl;
 	for (std::size_t ucnt = dh.stackLine; 0 != ucnt; --ucnt) {
 		if (ucnt + dh.stackOffset < dh.stackItems + 1) {
 			const auto &elm = stk.at(dh.stackItems - ucnt - dh.stackOffset);

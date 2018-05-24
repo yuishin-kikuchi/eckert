@@ -141,7 +141,7 @@ catch (std::exception &ex) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / SHOW CONFIG INFORMATION
 // [ Update ]
-// Feb 02, 2016
+// May 22, 2018
 //====--------------------------------------------------------------------==////
 void EckertCui::showConfigAdditionalInformation() {
 	//==  Backup cout flags  ==//
@@ -187,7 +187,7 @@ void EckertCui::showConfigAdditionalInformation() {
 	std::cout << indent;
 	switch (msg_type) {
 		case MessageType::NO_ERROR:
-			std::cout << "To quit config, type \"calc\", \"homura\"";
+			std::cout << "Type \"calc\" or \"homura\" to quit config";
 			break;
 		case MessageType::UNKNOWN:
 			std::cout << "Error code: " << errcode;

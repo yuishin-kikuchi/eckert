@@ -209,7 +209,9 @@ T SafetyIntegerCalculator::gcd(const T &lhs, const T &rhs) {
 	if (n < 0) {
 		n = neg(n);
 	}
-	if (n < m) {
+	// requires m >= n
+	// so if not, swap n with m
+	if (m < n) {
 		temp = m;
 		m = n;
 		n = temp;

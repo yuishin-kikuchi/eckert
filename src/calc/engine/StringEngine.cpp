@@ -10,7 +10,7 @@
 namespace engine {
 
 ////==--------------------------------------------------------------------====//
-// 10TH POWER
+// POWER OF TEN
 // [ Update ]
 // Dec 18, 2016
 //====--------------------------------------------------------------------==////
@@ -530,10 +530,11 @@ std::string StringEngine::elementToString(const CalculationConfig &cfg, const Sp
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / COMPLEX ARGUMENT TO STRING
 // [ Update ]
-// Dec 18, 2016
+// May 24, 2018
 //====--------------------------------------------------------------------==////
 std::string StringEngine::complexArgumentToString(const CalculationConfig &cfg, const SpElement &elm) const {
 	std::ostringstream os;
+	bool isRadian = cfg.getAngleMode() == CalculationConfig::AngleMode::RADIAN;
 	switch (elm->getType()) {
 		case Element::INTEGER: {
 			auto num = GET_INTEGER_DATA(elm);
@@ -541,36 +542,55 @@ std::string StringEngine::complexArgumentToString(const CalculationConfig &cfg, 
 			int digits = 0;
 			switch (fcfg.getDisplayMode()) {
 				case FloatingDisplayConfig::STANDARD:
-					os << num;
-					return os.str();
+					digits = fcfg.getStdDigits() - 1;
+					break;
 				case FloatingDisplayConfig::FIXED:
 					digits = fcfg.getFixDigits();
 					break;
 				case FloatingDisplayConfig::SCIENTIFIC:
 					digits = fcfg.getSciDigits() - 1;
-					if (num > 100.0L) {
-						digits -= 2;
-					}
-					else if (num > 10.0L) {
-						digits -= 1;
-					}
 					break;
 				case FloatingDisplayConfig::ENGINEERING:
 					digits = fcfg.getEngDigits() - 1;
-					if (num > 100.0L) {
-						digits -= 2;
-					}
-					else if (num > 10.0L) {
-						digits -= 1;
-					}
 					break;
 				default:
 					break;
 			}
-			if (digits < 0) {
-				digits = 0;
+			if (num == 0.0) {
+				if (!isRadian) {
+					os << "  ";
+					digits -= 2;
+				}
+				if (digits < 1) {
+					os << floatToFixedString((floating_t)num, 0) << '.';
+				}
+				else {
+					os << floatToFixedString((floating_t)num, digits);
+				}
 			}
-			os << floatToFixedString((floating_t)num, digits);
+			else {
+				int decimalExponent = (int)std::floor(std::log10(num));
+				int tempDigits = (digits < 2) ? 2 : digits;
+				floating_t mantissa = (floating_t)num;
+				mantissa /= pow10(decimalExponent - tempDigits + 1);
+				mantissa = std::round(mantissa) / pow10(tempDigits - 1);
+				if (std::abs(10.0L - mantissa) < pow10(-tempDigits - 2)) {
+					mantissa /= 10.0L;
+					decimalExponent++;
+				}
+				if (!isRadian) {
+					if (decimalExponent > -1) {
+						for (int cnt = 2; cnt > decimalExponent; --cnt) {
+							os << ' ';
+						}
+					}
+					digits -= 2;
+				}
+				if (digits < 0) {
+					digits = 0;
+				}
+				os << floatToFixedString((floating_t)num, digits);
+			}
 			break;
 		}
 		case Element::FLOATING: {
@@ -580,41 +600,53 @@ std::string StringEngine::complexArgumentToString(const CalculationConfig &cfg, 
 			switch (fcfg.getDisplayMode()) {
 				case FloatingDisplayConfig::STANDARD:
 					digits = fcfg.getStdDigits() - 1;
-					if (num > 100.0L) {
-						digits -= 2;
-					}
-					else if (num > 10.0L) {
-						digits -= 1;
-					}
 					break;
 				case FloatingDisplayConfig::FIXED:
 					digits = fcfg.getFixDigits();
 					break;
 				case FloatingDisplayConfig::SCIENTIFIC:
 					digits = fcfg.getSciDigits() - 1;
-					if (num > 100.0L) {
-						digits -= 2;
-					}
-					else if (num > 10.0L) {
-						digits -= 1;
-					}
 					break;
 				case FloatingDisplayConfig::ENGINEERING:
 					digits = fcfg.getEngDigits() - 1;
-					if (num > 100.0L) {
-						digits -= 2;
-					}
-					else if (num > 10.0L) {
-						digits -= 1;
-					}
 					break;
 				default:
 					break;
 			}
-			if (digits < 0) {
-				digits = 0;
+			if (num == 0.0) {
+				if (!isRadian) {
+					os << "  ";
+				}
+				if (digits < 1) {
+					os << floatToFixedString((floating_t)num, 0) << '.';
+				}
+				else {
+					os << floatToFixedString((floating_t)num, digits);
+				}
 			}
-			os << floatToFixedString((floating_t)num, digits);
+			else {
+				int decimalExponent = (int)std::floor(std::log10(num));
+				int tempDigits = (digits < 2) ? 2 : digits;
+				floating_t mantissa = num;
+				mantissa /= pow10(decimalExponent - tempDigits + 1);
+				mantissa = std::round(mantissa) / pow10(tempDigits - 1);
+				if (std::abs(10.0L - mantissa) < pow10(-tempDigits - 2)) {
+					mantissa /= 10.0L;
+					decimalExponent++;
+				}
+				if (!isRadian) {
+					if (decimalExponent > -1) {
+						for (int cnt = 2; cnt > decimalExponent; --cnt) {
+							os << ' ';
+						}
+					}
+					digits -= 2;
+				}
+				if (digits < 0) {
+					digits = 0;
+				}
+				os << floatToFixedString((floating_t)num, digits);
+			}
 			break;
 		}
 		case Element::RATIONAL: {
@@ -666,16 +698,17 @@ std::string StringEngine::einfinityToString(const CalculationConfig &cfg, const 
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / INTEGER TO STRING
 // [ Update ]
-// Nov 16, 2016
+// May 24, 2018
 //====--------------------------------------------------------------------==////
 std::string StringEngine::integerToString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
 	std::ostringstream os;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	auto num = GET_INTEGER_DATA(elm);
 	if (getEulerFlag()) {
 		_euler = false;
 		if (0 == num) {
-			os << 0;
+			os << complexToReImString(cfg, GEN_COMPLEX(elm, GEN_INTEGER(0)));
 		}
 		else {
 			os << integerToString(cfg, proc.abs(elm));
@@ -683,10 +716,14 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN: {
 					if (num > 0) {
-						os << integerToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_FLOATING(0.0));
+						if (_piRad) {
+							os << " Pi";
+						}
 					}
 					else {
 						if (_piRad) {
+							os << complexArgumentToString(cfg, GEN_FLOATING(1.0));
 							os << " Pi";
 						}
 						else {
@@ -721,7 +758,6 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 		_euler = true;
 		return os.str();
 	}
-	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	switch (fcfg.getDisplayMode()) {
 		case FloatingDisplayConfig::STANDARD:
 			os << num;
@@ -735,17 +771,18 @@ std::string StringEngine::integerToString(const CalculationConfig &cfg, const Sp
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / FLOATING TO STRING
 // [ Update ]
-// Nov 16, 2016
+// May 24, 2018
 //====--------------------------------------------------------------------==////
 std::string StringEngine::floatingToString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
 	std::ostringstream os;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	floating_t num = GET_FLOATING_DATA(elm);
 	os << std::uppercase;
 	if (getEulerFlag()) {
 		_euler = false;
 		if (0.0 == num) {
-			os << floatingToString(cfg, elm);
+			os << complexToReImString(cfg, GEN_COMPLEX(elm, GEN_INTEGER(0)));
 		}
 		else {
 			os << floatingToString(cfg, proc.abs(elm));
@@ -753,10 +790,14 @@ std::string StringEngine::floatingToString(const CalculationConfig &cfg, const S
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN:
 					if (num > 0.0) {
-						os << complexArgumentToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_FLOATING(0.0));
+						if (_piRad) {
+							os << " Pi";
+						}
 					}
 					else {
 						if (_piRad) {
+							os << complexArgumentToString(cfg, GEN_FLOATING(1.0));
 							os << " Pi";
 						}
 						else {
@@ -802,7 +843,6 @@ std::string StringEngine::floatingToString(const CalculationConfig &cfg, const S
 		os << "ERROR (NaN)";
 	}
 	else {
-		const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 		switch (fcfg.getDisplayMode()) {
 			case FloatingDisplayConfig::STANDARD:
 				os << floatToStandardString(num, fcfg.getStdDigits());
@@ -826,17 +866,18 @@ std::string StringEngine::floatingToString(const CalculationConfig &cfg, const S
 ////==--------------------------------------------------------------------====//
 // STRING ENGINE / RATIONAL TO STRING
 // [ Update ]
-// Nov 16, 2016
+// May 24, 2018
 //====--------------------------------------------------------------------==////
 std::string StringEngine::rationalToString(const CalculationConfig &cfg, const SpElement &elm) const {
 	GeneralProcessor proc;
 	std::ostringstream os;
+	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	rational_t rtemp = GET_RATIONAL_DATA(elm);
 	if (getEulerFlag()) {
 		_euler = false;
 		integer_t num = rtemp.getNum();
 		if (0 == num) {
-			os << rtemp;
+			os << complexToReImString(cfg, GEN_COMPLEX(elm, GEN_INTEGER(0)));
 		}
 		else {
 			os << rationalToString(cfg, proc.abs(elm));
@@ -844,10 +885,14 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 			switch (cfg.getAngleMode()) {
 				case CalculationConfig::AngleMode::RADIAN:
 					if (num > 0) {
-						os << complexArgumentToString(cfg, GEN_INTEGER(0));
+						os << complexArgumentToString(cfg, GEN_FLOATING(0.0));
+						if (_piRad) {
+							os << " Pi";
+						}
 					}
 					else {
 						if (_piRad) {
+							os << complexArgumentToString(cfg, GEN_FLOATING(1.0));
 							os << " Pi";
 						}
 						else {
@@ -881,7 +926,6 @@ std::string StringEngine::rationalToString(const CalculationConfig &cfg, const S
 		_euler = true;
 		return os.str();
 	}
-	const FloatingDisplayConfig &fcfg = refFloatingDisplayConfig();
 	switch (fcfg.getDisplayMode()) {
 		case FloatingDisplayConfig::STANDARD: {
 			bool is_finite_decimal = false;

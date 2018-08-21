@@ -421,91 +421,91 @@ engine::SpElement EckertParser::multiplyByPrefix(const engine::SpElement &elm, c
 	engine::SpElement to_multiply;
 	switch (prefix) {
 		case NumericCheck::MetricPrefix::YOCTO:
-			to_multiply = engine::EckertConstants::prefixValue.at("y");
+			to_multiply = engine::EckertConstants::prefixValues.at("y");
 			break;
 		case NumericCheck::MetricPrefix::ZEPTO:
-			to_multiply = engine::EckertConstants::prefixValue.at("z");
+			to_multiply = engine::EckertConstants::prefixValues.at("z");
 			break;
 		case NumericCheck::MetricPrefix::ATTO:
-			to_multiply = engine::EckertConstants::prefixValue.at("a");
+			to_multiply = engine::EckertConstants::prefixValues.at("a");
 			break;
 		case NumericCheck::MetricPrefix::FEMTO:
-			to_multiply = engine::EckertConstants::prefixValue.at("f");
+			to_multiply = engine::EckertConstants::prefixValues.at("f");
 			break;
 		case NumericCheck::MetricPrefix::PICO:
-			to_multiply = engine::EckertConstants::prefixValue.at("p");
+			to_multiply = engine::EckertConstants::prefixValues.at("p");
 			break;
 		case NumericCheck::MetricPrefix::NANO:
-			to_multiply = engine::EckertConstants::prefixValue.at("n");
+			to_multiply = engine::EckertConstants::prefixValues.at("n");
 			break;
 		case NumericCheck::MetricPrefix::MICRO:
-			to_multiply = engine::EckertConstants::prefixValue.at("u");
+			to_multiply = engine::EckertConstants::prefixValues.at("u");
 			break;
 		case NumericCheck::MetricPrefix::MILLI:
-			to_multiply = engine::EckertConstants::prefixValue.at("m");
+			to_multiply = engine::EckertConstants::prefixValues.at("m");
 			break;
 		case NumericCheck::MetricPrefix::CENTI:
-			to_multiply = engine::EckertConstants::prefixValue.at("c");
+			to_multiply = engine::EckertConstants::prefixValues.at("c");
 			break;
 		case NumericCheck::MetricPrefix::DECI:
-			to_multiply = engine::EckertConstants::prefixValue.at("d");
+			to_multiply = engine::EckertConstants::prefixValues.at("d");
 			break;
 		case NumericCheck::MetricPrefix::ONE:
 			to_multiply = GEN_INTEGER(1);
 			break;
 		case NumericCheck::MetricPrefix::DECA:
-			to_multiply = engine::EckertConstants::prefixValue.at("da");
+			to_multiply = engine::EckertConstants::prefixValues.at("da");
 			break;
 		case NumericCheck::MetricPrefix::HECTO:
-			to_multiply = engine::EckertConstants::prefixValue.at("h");
+			to_multiply = engine::EckertConstants::prefixValues.at("h");
 			break;
 		case NumericCheck::MetricPrefix::KILO:
-			to_multiply = engine::EckertConstants::prefixValue.at("k");
+			to_multiply = engine::EckertConstants::prefixValues.at("k");
 			break;
 		case NumericCheck::MetricPrefix::MEGA:
-			to_multiply = engine::EckertConstants::prefixValue.at("M");
+			to_multiply = engine::EckertConstants::prefixValues.at("M");
 			break;
 		case NumericCheck::MetricPrefix::GIGA:
-			to_multiply = engine::EckertConstants::prefixValue.at("G");
+			to_multiply = engine::EckertConstants::prefixValues.at("G");
 			break;
 		case NumericCheck::MetricPrefix::TERA:
-			to_multiply = engine::EckertConstants::prefixValue.at("T");
+			to_multiply = engine::EckertConstants::prefixValues.at("T");
 			break;
 		case NumericCheck::MetricPrefix::PETA:
-			to_multiply = engine::EckertConstants::prefixValue.at("P");
+			to_multiply = engine::EckertConstants::prefixValues.at("P");
 			break;
 		case NumericCheck::MetricPrefix::EXA:
-			to_multiply = engine::EckertConstants::prefixValue.at("E");
+			to_multiply = engine::EckertConstants::prefixValues.at("E");
 			break;
 		case NumericCheck::MetricPrefix::ZETTA:
-			to_multiply = engine::EckertConstants::prefixValue.at("Z");
+			to_multiply = engine::EckertConstants::prefixValues.at("Z");
 			break;
 		case NumericCheck::MetricPrefix::YOTTA:
-			to_multiply = engine::EckertConstants::prefixValue.at("Y");
+			to_multiply = engine::EckertConstants::prefixValues.at("Y");
 			break;
 		case NumericCheck::MetricPrefix::KIBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Ki");
+			to_multiply = engine::EckertConstants::prefixValues.at("Ki");
 			break;
 		case NumericCheck::MetricPrefix::MEBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Mi");
+			to_multiply = engine::EckertConstants::prefixValues.at("Mi");
 			break;
 		case NumericCheck::MetricPrefix::GIBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Gi");
+			to_multiply = engine::EckertConstants::prefixValues.at("Gi");
 			break;
 		case NumericCheck::MetricPrefix::TEBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Ti");
+			to_multiply = engine::EckertConstants::prefixValues.at("Ti");
 			break;
 		case NumericCheck::MetricPrefix::PEBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Pi");
+			to_multiply = engine::EckertConstants::prefixValues.at("Pi");
 			break;
 		case NumericCheck::MetricPrefix::EXBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Ei");
+			to_multiply = engine::EckertConstants::prefixValues.at("Ei");
 			break;
 		case NumericCheck::MetricPrefix::ZEBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Zi");
+			to_multiply = engine::EckertConstants::prefixValues.at("Zi");
 			break;
 		case NumericCheck::MetricPrefix::YOBI:
-			to_multiply = engine::EckertConstants::prefixValue.at("Yi");
+			to_multiply = engine::EckertConstants::prefixValues.at("Yi");
 			break;
 		default:
 			to_multiply = GEN_INTEGER(1);
@@ -820,7 +820,7 @@ catch (StringConverter::Failure &) {
 ////==--------------------------------------------------------------------====//
 // ECKERT PARSER / GENERATE CONSTANT ELEMENT FROM STRING
 // [ Update ]
-// Nov 16, 2017
+// Aug 22, 2018
 //====--------------------------------------------------------------------==////
 EckertParser::ReturnCode
 EckertParser::genSpElementConstant(
@@ -829,14 +829,21 @@ EckertParser::genSpElementConstant(
 	engine::StackEngine &stackEngine,
 	EckertStates &stat)
 {
-	const auto &constantTable = engine::EckertConstants::scientificConstants;
+	const auto &keywordTable = engine::EckertConstants::scientificConstantKeywords;
+	const auto &valueTable = engine::EckertConstants::scientificConstantValues;
 	std::string lower_token = StringUtility::genLowerString(str);
-	if (constantTable.find(lower_token) != constantTable.end()) {
-		const auto &pair = constantTable.at(lower_token);
-		r_set = pair.elm;
-		stackEngine.setCommandMessage("PUSH_C");
-		stackEngine.setAdditionalMessage(lower_token);
-		return EckertParser::ReturnCode::SUCCESS;
+	if (keywordTable.find(lower_token) != keywordTable.end()) {
+		const auto &constId = keywordTable.at(lower_token);
+		if (valueTable.find(constId) != valueTable.end()) {
+			const auto &pair = valueTable.at(constId);
+			r_set = pair.elm;
+			stackEngine.setCommandMessage("PUSH_C");
+			stackEngine.setAdditionalMessage(lower_token);
+			return EckertParser::ReturnCode::SUCCESS;
+		}
+		else {
+			return EckertParser::ReturnCode::NOT_FOUND;
+		}
 	}
 	else {
 		return EckertParser::ReturnCode::NOT_FOUND;

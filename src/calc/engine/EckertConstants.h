@@ -8,7 +8,7 @@
 ////==--------------------------------------------------------------------====//
 // ECKERT CONSTANTS
 // [ Update ]
-// Nov 17, 2016
+// Aug 22, 2018
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -20,8 +20,10 @@ struct SpElementNamePair {
 
 class EckertConstants {
 	public:
-		static const std::map <std::string, SpElement> prefixValue;
-		static const std::map <std::string, SpElementNamePair> scientificConstants;
+		#include "EckertConstants__enum.h"
+		static const std::map <std::string, SpElement> prefixValues;
+		static const std::map <std::string, unsigned int> scientificConstantKeywords;
+		static const std::map <unsigned int, SpElementNamePair> scientificConstantValues;
 };
 
 } // namespace engine

@@ -27,7 +27,7 @@ class YoctoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("y"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("y"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -56,7 +56,7 @@ class ZeptoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("z"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("z"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -85,7 +85,7 @@ class AttoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("a"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("a"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -114,7 +114,7 @@ class FemtoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("f"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("f"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -143,7 +143,7 @@ class PicoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("p"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("p"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -172,7 +172,7 @@ class NanoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("n"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("n"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -201,7 +201,7 @@ class MicroOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("u"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("u"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -230,7 +230,7 @@ class MilliOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("m"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("m"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -259,7 +259,7 @@ class CentiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("c"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("c"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -288,7 +288,7 @@ class DeciOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("d"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("d"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -317,7 +317,7 @@ class DecaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("da"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("da"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -346,7 +346,7 @@ class HectoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("h"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("h"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -375,7 +375,7 @@ class KiloOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("k"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("k"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -404,7 +404,7 @@ class MegaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("M"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("M"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -433,7 +433,7 @@ class GigaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("G"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("G"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -462,7 +462,7 @@ class TeraOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("T"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("T"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -491,7 +491,7 @@ class PetaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("P"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("P"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -520,7 +520,7 @@ class ExaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("E"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("E"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -549,7 +549,7 @@ class ZettaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Z"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Z"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -578,7 +578,7 @@ class YottaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Y"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Y"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -607,7 +607,7 @@ class KibiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Ki"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Ki"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -636,7 +636,7 @@ class MebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Mi"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Mi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -665,7 +665,7 @@ class GibiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Gi"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Gi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -694,7 +694,7 @@ class TebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Ti"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Ti"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -723,7 +723,7 @@ class PebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Pi"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Pi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -752,7 +752,7 @@ class ExbiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Ei"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Ei"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -781,7 +781,7 @@ class ZebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Zi"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Zi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -810,7 +810,7 @@ class YobiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.mul(p_ex, EckertConstants::prefixValue.at("Yi"));
+					p_etemp = proc.mul(p_ex, EckertConstants::prefixValues.at("Yi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -839,7 +839,7 @@ class ToYoctoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("y"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("y"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -868,7 +868,7 @@ class ToZeptoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("z"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("z"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -897,7 +897,7 @@ class ToAttoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("a"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("a"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -926,7 +926,7 @@ class ToFemtoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("f"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("f"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -955,7 +955,7 @@ class ToPicoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("p"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("p"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -984,7 +984,7 @@ class ToNanoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("n"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("n"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1013,7 +1013,7 @@ class ToMicroOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("u"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("u"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1042,7 +1042,7 @@ class ToMilliOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("m"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("m"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1071,7 +1071,7 @@ class ToCentiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("c"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("c"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1100,7 +1100,7 @@ class ToDeciOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("d"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("d"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1129,7 +1129,7 @@ class ToDecaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("da"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("da"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1158,7 +1158,7 @@ class ToHectoOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("h"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("h"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1187,7 +1187,7 @@ class ToKiloOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("k"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("k"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1216,7 +1216,7 @@ class ToMegaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("M"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("M"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1245,7 +1245,7 @@ class ToGigaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("G"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("G"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1274,7 +1274,7 @@ class ToTeraOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("T"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("T"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1303,7 +1303,7 @@ class ToPetaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("P"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("P"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1332,7 +1332,7 @@ class ToExaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("E"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("E"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1361,7 +1361,7 @@ class ToZettaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Z"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Z"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1390,7 +1390,7 @@ class ToYottaOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Y"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Y"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1419,7 +1419,7 @@ class ToKibiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ki"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Ki"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1448,7 +1448,7 @@ class ToMebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Mi"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Mi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1477,7 +1477,7 @@ class ToGibiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Gi"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Gi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1506,7 +1506,7 @@ class ToTebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ti"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Ti"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1535,7 +1535,7 @@ class ToPebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Pi"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Pi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1564,7 +1564,7 @@ class ToExbiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Ei"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Ei"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1593,7 +1593,7 @@ class ToZebiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Zi"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Zi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());
@@ -1622,7 +1622,7 @@ class ToYobiOperator : public PrefixOperator {
 				SpElement p_ex = stack.fetch(0);
 				SpElement p_etemp;
 				try {
-					p_etemp = proc.div(p_ex, EckertConstants::prefixValue.at("Yi"));
+					p_etemp = proc.div(p_ex, EckertConstants::prefixValues.at("Yi"));
 				}
 				catch (BadArgument &ba) {
 					stackEngine.setErrorMessage(ba.what());

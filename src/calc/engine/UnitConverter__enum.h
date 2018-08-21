@@ -2,8 +2,8 @@
 // THIS HEADER IS A PART OF UNIT CONVERTER
 
 #ifdef _UNIT_CONVERTER_H_
-#ifndef __UNIT_CONVERTER_UNITS_H_
-#define __UNIT_CONVERTER_UNITS_H_
+#ifndef __UNIT_CONVERTER_ENUM_H_
+#define __UNIT_CONVERTER_ENUM_H_
 
 enum : unsigned int {
 	// MASK
@@ -211,5 +211,5 @@ enum : unsigned int {
 	TMP_F      = U_TEMP | 4,
 };
 
-#endif // ifndef __UNIT_CONVERTER_UNITS_H_
+#endif // ifndef __UNIT_CONVERTER_ENUM_H_
 #endif // ifdef _UNIT_CONVERTER_H_

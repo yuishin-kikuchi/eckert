@@ -72,7 +72,7 @@ catch (...) {
 // Dec 16, 2016
 //====--------------------------------------------------------------------==////
 void EckertCui::displayVersion() {
-	const auto &constantTable = engine::EckertConstants::scientificConstants;
+	const auto &constantTable = engine::EckertConstants::scientificConstantValues;
 	const auto &unitTable = engine::UnitConverter::criteria;
 	auto display_width = _paginator.getDisplayWidth();
 	std::cout << indent << "VERSION DISPLAY" << std::endl;
@@ -664,7 +664,7 @@ void EckertCui::showColumn(const EckertCui::DisplayHint &dh) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / SHOW CALCULATOR INFORMATION
 // [ Update ]
-// Dec 22, 2016
+// Aug 22, 2018
 //====--------------------------------------------------------------------==////
 void EckertCui::showCalculatorAdditionalInformation() {
 	const char *DEFAULT_MESSAGE = "Ready to operate";
@@ -672,7 +672,8 @@ void EckertCui::showCalculatorAdditionalInformation() {
 	const std::ios::fmtflags format = std::cout.flags();
 	//==  Messages reference  ==//
 	auto &stackEngine = _engCalc.refStackEngine();
-	const auto &constantTable = engine::EckertConstants::scientificConstants;
+	const auto &constantKeywordTable = engine::EckertConstants::scientificConstantKeywords;
+	const auto &constantValueTable = engine::EckertConstants::scientificConstantValues;
 	const auto &errorMessageTable = StringTables::errorMessage;
 	const auto &noticeMessageTable = StringTables::noticeMessage;
 	const auto &confirmMessageTable = StringTables::confirmMessage;
@@ -716,9 +717,15 @@ void EckertCui::showCalculatorAdditionalInformation() {
 	}
 	else if (!opcode.compare("PUSH_C")) {
 		std::cout << instructionMessageTable.at(opcode) << std::endl;
-		if (constantTable.find(additional) != constantTable.end()) {
-			const auto &pair = constantTable.at(additional);
-			std::cout << indent << pair.name << std::endl;
+		if (constantKeywordTable.find(additional) != constantKeywordTable.end()) {
+			const auto &constId = constantKeywordTable.at(additional);
+			if (constantValueTable.find(constId) != constantValueTable.end()) {
+				const auto &pair = constantValueTable.at(constId);
+				std::cout << indent << pair.name << std::endl;
+			}
+			else {
+				std::cout << "code: " << additional << std::endl;
+			}
 		}
 		else {
 			std::cout << "code: " << additional << std::endl;

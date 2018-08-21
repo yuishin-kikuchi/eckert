@@ -22,7 +22,7 @@ struct CoversionCriterion {
 
 class UnitConverter {
 	public:
-		#include "UnitConverter__units.h"
+		#include "UnitConverter__enum.h"
 		static const std::map <std::string, unsigned int> unitKeywords;
 		static const std::map <unsigned int, CoversionCriterion> criteria;
 		static const std::string& getUnitName(const unsigned int &unit);

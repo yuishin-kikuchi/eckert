@@ -24,7 +24,7 @@
 ////==--------------------------------------------------------------------====//
 // ENGINEERING CALCULATOR
 // [ Update ]
-// Jul 01, 2017
+// Aug 22, 2018
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -265,8 +265,6 @@ void EngineeringCalculator::init() {
 	addOperator("rand", StackOperatorPtr(new RandomIntegerOperator()));
 	addOperator("frand", StackOperatorPtr(new RandomFloatingOperator()));
 	// stack
-	addOperator("copy", StackOperatorPtr(new DupOperator()));
-	addOperator("c", StackOperatorPtr(new DupOperator()));
 	addOperator("dup", StackOperatorPtr(new DupOperator()));
 	addOperator("swap", StackOperatorPtr(new SwapOperator()));
 	addOperator("$", StackOperatorPtr(new SwapOperator()));

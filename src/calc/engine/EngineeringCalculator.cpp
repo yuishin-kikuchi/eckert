@@ -130,7 +130,7 @@ void EngineeringCalculator::init() {
 	addOperator("magag", StackOperatorPtr(new MagArgGradeOperator()));
 	// engineering
 	addOperator("radix", StackOperatorPtr(new RadixOperator()));
-	addOperator("eps", StackOperatorPtr(new EpsilonOperator()));
+	addOperator("epsilon", StackOperatorPtr(new EpsilonOperator()));
 	addOperator("tpix", StackOperatorPtr(new TpixOperator()));
 	addOperator("dtpi", StackOperatorPtr(new DtpiOperator()));
 	addOperator("para", StackOperatorPtr(new ParallelOperator()));

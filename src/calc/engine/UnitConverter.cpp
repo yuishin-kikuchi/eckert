@@ -53,7 +53,7 @@ bool UnitConverter::convert(SpElement &dst, const SpElement &src, const unsigned
 ////==--------------------------------------------------------------------====//
 // UNIT CONVERTER / KEYWORD TO UNIT
 // [ Update ]
-// May 19, 2018
+// Sep 30, 2018
 //====--------------------------------------------------------------------==////
 const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	// LEN
@@ -211,6 +211,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "fps", VEL_FPS },
 	{ "mph", VEL_MPH },
 	{ "kn", VEL_KN },
+	{ "kt", VEL_KN },
 	// ACCELERATION
 	{ "m/s2", ACL_MPS2 },
 	{ "km/h/s", ACL_KMPHPS },
@@ -220,6 +221,7 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "fps2", ACL_FPS2 },
 	{ "mph/s", ACL_MPHPS },
 	{ "kn/s", ACL_KNPS },
+	{ "kt/s", ACL_KNPS },
 	// FORCE
 	{ "newton", FC_NEWTON },
 	{ "dyn", FC_DYN },

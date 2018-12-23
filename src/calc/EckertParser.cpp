@@ -831,6 +831,7 @@ EckertParser::genSpElementConstant(
 {
 	const auto &keywordTable = engine::EckertConstants::scientificConstantKeywords;
 	const auto &valueTable = engine::EckertConstants::scientificConstantValues;
+	const auto &engConstTable = engine::EckertConstants::engineeringConstantValues;
 	std::string lower_token = StringUtility::genLowerString(str);
 	if (keywordTable.find(lower_token) != keywordTable.end()) {
 		const auto &constId = keywordTable.at(lower_token);
@@ -844,6 +845,13 @@ EckertParser::genSpElementConstant(
 		else {
 			return EckertParser::ReturnCode::NOT_FOUND;
 		}
+	}
+	else if (engConstTable.find(lower_token) != engConstTable.end()) {
+		const auto &pair = engConstTable.at(lower_token);
+		r_set = pair.elm;
+		stackEngine.setCommandMessage("PUSH_E");
+		stackEngine.setAdditionalMessage(lower_token);
+		return EckertParser::ReturnCode::SUCCESS;
 	}
 	else {
 		return EckertParser::ReturnCode::NOT_FOUND;

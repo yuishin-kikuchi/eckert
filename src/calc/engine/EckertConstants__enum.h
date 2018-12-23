@@ -19,7 +19,6 @@ enum : unsigned int {
 	CONST_ADPT  = 6 << UNMASKED_BITS,
 	CONST_PL    = 7 << UNMASKED_BITS,
 	CONST_ASTRO = 8 << UNMASKED_BITS,
-	//CONST_STDW  = 9 << UNMASKED_BITS,
 	// Math
 	MATH_PI     = CONST_MATH | 1,
 	MATH_NAPIER = CONST_MATH | 2,

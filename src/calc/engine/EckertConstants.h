@@ -8,7 +8,7 @@
 ////==--------------------------------------------------------------------====//
 // ECKERT CONSTANTS
 // [ Update ]
-// Aug 22, 2018
+// Dec 23, 2018
 //====--------------------------------------------------------------------==////
 
 namespace engine {
@@ -24,6 +24,7 @@ class EckertConstants {
 		static const std::map <std::string, SpElement> prefixValues;
 		static const std::map <std::string, unsigned int> scientificConstantKeywords;
 		static const std::map <unsigned int, SpElementNamePair> scientificConstantValues;
+		static const std::map <std::string, SpElementNamePair> engineeringConstantValues;
 };
 
 } // namespace engine

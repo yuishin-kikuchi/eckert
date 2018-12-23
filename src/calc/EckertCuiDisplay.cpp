@@ -69,10 +69,11 @@ catch (...) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / DISPLAY VERSION
 // [ Update ]
-// Dec 16, 2016
+// Dec 23, 2018
 //====--------------------------------------------------------------------==////
 void EckertCui::displayVersion() {
 	const auto &constantTable = engine::EckertConstants::scientificConstantValues;
+	const auto &engConstantTable = engine::EckertConstants::engineeringConstantValues;
 	const auto &unitTable = engine::UnitConverter::criteria;
 	auto display_width = _paginator.getDisplayWidth();
 	std::cout << indent << "VERSION DISPLAY" << std::endl;
@@ -82,7 +83,7 @@ void EckertCui::displayVersion() {
 	// info
 	const auto opSize = _engCalc.refOperators().size();
 	const auto drgSize = _drgOperators.size();
-	const auto constSize = constantTable.size();
+	const auto constSize = constantTable.size() + engConstantTable.size();
 	const auto unitSize = unitTable.size();
 	putline(display_width, '-');
 	std::cout << indent_deep << "   Stack functions: " << opSize + drgSize * 3 << std::endl;
@@ -664,7 +665,7 @@ void EckertCui::showColumn(const EckertCui::DisplayHint &dh) {
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / SHOW CALCULATOR INFORMATION
 // [ Update ]
-// Aug 22, 2018
+// Dec 23, 2018
 //====--------------------------------------------------------------------==////
 void EckertCui::showCalculatorAdditionalInformation() {
 	const char *DEFAULT_MESSAGE = "Ready to operate";
@@ -674,6 +675,7 @@ void EckertCui::showCalculatorAdditionalInformation() {
 	auto &stackEngine = _engCalc.refStackEngine();
 	const auto &constantKeywordTable = engine::EckertConstants::scientificConstantKeywords;
 	const auto &constantValueTable = engine::EckertConstants::scientificConstantValues;
+	const auto &engConstTable = engine::EckertConstants::engineeringConstantValues;
 	const auto &errorMessageTable = StringTables::errorMessage;
 	const auto &noticeMessageTable = StringTables::noticeMessage;
 	const auto &confirmMessageTable = StringTables::confirmMessage;
@@ -726,6 +728,16 @@ void EckertCui::showCalculatorAdditionalInformation() {
 			else {
 				std::cout << "code: " << additional << std::endl;
 			}
+		}
+		else {
+			std::cout << "code: " << additional << std::endl;
+		}
+	}
+	else if (!opcode.compare("PUSH_E")) {
+		std::cout << instructionMessageTable.at(opcode) << std::endl;
+		if (engConstTable.find(additional) != engConstTable.end()) {
+			const auto &pair = engConstTable.at(additional);
+			std::cout << indent << pair.name << std::endl;
 		}
 		else {
 			std::cout << "code: " << additional << std::endl;

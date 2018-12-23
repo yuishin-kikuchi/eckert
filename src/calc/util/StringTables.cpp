@@ -185,7 +185,8 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	// Stack operation
 	{ "PUSH_N", "PUSH" },
 	{ "PUSH_B", "PUSH" },
-	{ "PUSH_C", "PUSH Constant" },
+	{ "PUSH_C", "PUSH Math/Scientific Constant" },
+	{ "PUSH_E", "PUSH Engineering Constant" },
 	{ "PUSH_S", "PUSH" },
 	{ "OP_DUP", "DUPLICATE" },
 	{ "OP_SWAP", "SWAP Y with X" },
@@ -316,7 +317,7 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "OP_CBRT", "CUBIC ROOT" },
 	{ "OP_POW", "POWER Y^X" },
 	{ "OP_NRT", "N-th ROOT" },
-	{ "OP_EXP", "NATURAL EXPONENTIAL FUNCTION" },
+	{ "OP_EXP", "NATURAL EXPONENT" },
 	{ "OP_BPOW", "POWER of TWO" },
 	{ "OP_TPOW", "POWER of TEN" },
 	{ "OP_LOGB", "LOGARITHM of X to base Y" },

@@ -73,6 +73,8 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "jou", LEN_JOU },
 	{ "chou", LEN_CHOU },
 	{ "ri", LEN_RI },
+	{ "pc", LEN_PICA },
+	{ "pt", LEN_PT },
 	// LEN INV
 	{ "/m", LENI_M },
 	{ "/km", LENI_KM },
@@ -90,6 +92,8 @@ const std::map <std::string, unsigned int> UnitConverter::unitKeywords = {
 	{ "/jou", LENI_JOU },
 	{ "/chou", LENI_CHOU },
 	{ "/ri", LENI_RI },
+	{ "/pc", LENI_PICA },
+	{ "/pt", LENI_PT },
 	// AREA
 	{ "m2", AR_M2 },
 	{ "km2", AR_KM2 },
@@ -278,6 +282,8 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ LEN_JOU, { "jou", U_LENGTH, GEN_RATIONAL2(100, 33), GEN_INTEGER(0) } },
 	{ LEN_CHOU, { "chou", U_LENGTH, GEN_RATIONAL2(1200, 11), GEN_INTEGER(0) } },
 	{ LEN_RI, { "ri", U_LENGTH, GEN_RATIONAL2(43200, 11), GEN_INTEGER(0) } },
+	{ LEN_PICA, { "pc", U_LENGTH, GEN_RATIONAL2(127, 30000), GEN_INTEGER(0) } },
+	{ LEN_PT, { "pt", U_LENGTH, GEN_RATIONAL2(127, 360000), GEN_INTEGER(0) } },
 	// LENGTH INV
 	{ LENI_M, { "/m", U_LENGTH_I, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ LENI_KM, { "/km", U_LENGTH_I, GEN_RATIONAL2(1, 1000), GEN_INTEGER(0) } },
@@ -295,6 +301,8 @@ const std::map <unsigned int, CoversionCriterion> UnitConverter::criteria = {
 	{ LENI_JOU, { "/jou", U_LENGTH_I, GEN_RATIONAL2(33, 100), GEN_INTEGER(0) } },
 	{ LENI_CHOU, { "/chou", U_LENGTH_I, GEN_RATIONAL2(11, 1200), GEN_INTEGER(0) } },
 	{ LENI_RI, { "/ri", U_LENGTH_I, GEN_RATIONAL2(11, 43200), GEN_INTEGER(0) } },
+	{ LENI_PICA, { "/pc", U_LENGTH, GEN_RATIONAL2(30000, 127), GEN_INTEGER(0) } },
+	{ LENI_PT, { "/pt", U_LENGTH, GEN_RATIONAL2(360000, 127), GEN_INTEGER(0) } },
 	// AREA
 	{ AR_M2, { "m2", U_AREA, GEN_INTEGER(1), GEN_INTEGER(0) } },
 	{ AR_KM2, { "km2", U_AREA, GEN_INTEGER(1000000), GEN_INTEGER(0) } },

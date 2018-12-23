@@ -43,6 +43,8 @@ enum : unsigned int {
 	LEN_JOU    = U_LENGTH | 14,
 	LEN_CHOU   = U_LENGTH | 15,
 	LEN_RI     = U_LENGTH | 16,
+	LEN_PICA   = U_LENGTH | 17,
+	LEN_PT     = U_LENGTH | 18,
 	// LENGTH INV
 	LENI_M     = U_LENGTH_I | 1,
 	LENI_KM    = U_LENGTH_I | 2,
@@ -60,6 +62,8 @@ enum : unsigned int {
 	LENI_JOU   = U_LENGTH_I | 14,
 	LENI_CHOU  = U_LENGTH_I | 15,
 	LENI_RI    = U_LENGTH_I | 16,
+	LENI_PICA  = U_LENGTH_I | 17,
+	LENI_PT    = U_LENGTH_I | 18,
 	// AREA
 	AR_M2      = U_AREA | 1,
 	AR_KM2     = U_AREA | 2,

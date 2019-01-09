@@ -19,9 +19,9 @@
 const char *const EckertCui::NAME
  = "Engineering Calculator with KEyboard and Refined Tools";
 const char *const EckertCui::AUTHOR
- = "(C) 2014-2018  Yuishin Kikuchi";
+ = "(C) 2014-2019  Yuishin Kikuchi";
 const char *const EckertCui::VERSION
- = "Version Dec 23, 2018";
+ = "Version Jan 03, 2019";
 
 ////==--------------------------------------------------------------------====//
 // ECKERT CUI / CONSTRUCTER

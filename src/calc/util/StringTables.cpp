@@ -75,7 +75,7 @@ const std::map <std::string, std::string> StringTables::pushMessage = {
 	{ "STR", "String" },
 	{ "INT", "Integer" },
 	{ "DEC", "Decimal" },
-	{ "EXP", "Exponent" },
+	{ "EXP", "Scientific" },
 	{ "IINT", "Imaginary Integer" },
 	{ "IDEC", "Imaginary Decimal" },
 	{ "IEXP", "Imaginary Exponential" },

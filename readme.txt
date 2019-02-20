@@ -6,12 +6,11 @@
 ■ソフトの種別
     コンソール電卓アプリケーション
 ■対応システム
-    Windows 7, 8, 8.1で動作確認済み
+    Windows 7, 8, 8.1, 10で動作確認済み
 ■バージョン
     updates.txtからご確認ください
 ■作者
     Yuishin Kikuchi
-    http://sfoftime.web.fc2.com/
 ■開発期間
     2014年09月01日～
 ■開発言語・環境

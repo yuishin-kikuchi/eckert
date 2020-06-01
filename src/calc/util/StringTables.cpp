@@ -437,10 +437,10 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	{ "OP_MGETR", "GET ROW FROM MATRIX" },
 	{ "OP_MGETC", "GET COLUMN FROM MATRIX" },
 	// innner/outer product
-	{ "OP_IPRD", "INNER PRODUCT" },
-	{ "OP_OPRD", "OUTER PRODUCT" },
-	{ "OP_NORM", "EUCLID NORM" },
-	{ "OP_NSQ", "EUCLID NORM SQUARED" },
+	{ "OP_IPRD", "DOT PRODUCT" },
+	{ "OP_OPRD", "CROSS PRODUCT" },
+	{ "OP_NORM", "EUCLIDIAN NORM" },
+	{ "OP_NSQ", "EUCLIDIAN NORM SQUARED" },
 	{ "OP_LPN", "Lp-NORM" },
 	{ "OP_MAXN", "MAX NORM" },
 	// for matrix

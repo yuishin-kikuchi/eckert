@@ -292,7 +292,6 @@ try {
 		}
 		case Element::COMPLEX: {
 			//===  asinRadian(COMPLEX)  ===//
-			//==  acosRadian(COMPLEX)  ==//
 			// asin(Z) = -i * ln(sqrt(1-Z^2) + i*Z)
 			SpElement root = sqrt(sub(GEN_INTEGER(1), square(p_ex)));
 			SpElement logarithm = loge(add(root, mul(POS_IMAGINARY, p_ex)));

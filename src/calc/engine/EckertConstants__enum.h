@@ -28,7 +28,7 @@ enum : unsigned int {
 	UNIV_MU0  = CONST_UNIV | 2,
 	UNIV_EPS0 = CONST_UNIV | 3,
 	UNIV_Z0   = CONST_UNIV | 4,
-	UNIV_G0   = CONST_UNIV | 5,
+	UNIV_G    = CONST_UNIV | 5,
 	UNIV_H    = CONST_UNIV | 6,
 	UNIV_HBAR = CONST_UNIV | 7,
 	// Electro-magnetic constant

@@ -50,8 +50,8 @@ EckertConstants::scientificConstantKeywords = {
 	{ "eps0", UNIV_EPS0 },
 	{ "impedance", UNIV_Z0 },
 	{ "z0", UNIV_Z0 },
-	{ "gravitation", UNIV_G0 },
-	{ "newtonian", UNIV_G0 },
+	{ "gravitation", UNIV_G },
+	{ "newtonian", UNIV_G },
 	{ "planck", UNIV_H },
 	{ "h", UNIV_H },
 	{ "rplanck", UNIV_HBAR },
@@ -103,9 +103,12 @@ EckertConstants::scientificConstantKeywords = {
 	// thermal radiation
 	{ "stefan", CHEM_STEFAN },
 	{ "f.rad", CHEM_F_RAD },
+	{ "c1", CHEM_F_RAD },
 	{ "s.rad", CHEM_S_RAD },
+	{ "c2", CHEM_S_RAD },
 	// adopted value
 	{ "gravity", ADPT_G0 },
+	{ "g0",ADPT_G0 },
 	{ "atm", ADPT_ATM },
 	{ "zerod", ADPT_ZDEG },
 	// Planck unit
@@ -131,7 +134,7 @@ EckertConstants::scientificConstantValues = {
 	{ UNIV_MU0, { GEN_FLOATING(1.25663706143591729E-06L), "Magnetic constant" } },
 	{ UNIV_EPS0, { GEN_FLOATING(8.85418781762038985E-12L), "Electric constant" } },
 	{ UNIV_Z0, { GEN_FLOATING(376.730313461770655L), "Characteristic impedance of vacum" } },
-	{ UNIV_G0, { GEN_FLOATING(6.67408E-11L), "Gravitation constant" } },
+	{ UNIV_G, { GEN_FLOATING(6.67408E-11L), "Gravitation constant" } },
 	{ UNIV_H, { GEN_FLOATING(6.626070040E-34L), "Planck constant" } },
 	{ UNIV_HBAR, { GEN_FLOATING(1.054571800E-34L), "Reduced Planck constant" } },
 	// Electro-magnetic constant

@@ -222,7 +222,7 @@ bool NumericCheck::isDecimal(const std::string &token) {
 	while (pos < len) {
 		if ('.' == token.at(pos)) {
 			if (has_dot) {
-				// only one dot is_ allowed
+				// only one dot is allowed
 				return false;
 			}
 			else {
@@ -271,7 +271,7 @@ bool NumericCheck::isExponential(const std::string &token) {
 		case 'E':
 			// fall through
 		case 'e':
-			// E as first char is_ not allowed
+			// E as first char is not allowed
 			return false;
 		case '.':
 			has_dot = true;
@@ -331,7 +331,7 @@ bool NumericCheck::isExponential(const std::string &token) {
 			break;
 	}
 	if (pos == len) {
-		// ending with e is_ not allowed
+		// ending with e is not allowed
 		return false;
 	}
 	while (pos < len) {
@@ -341,7 +341,7 @@ bool NumericCheck::isExponential(const std::string &token) {
 		++pos;
 	}
 	if (!has_eex) {
-		// if it doesn't have E, it is_ error
+		// if it doesn't have E, it iserror
 		return false;
 	}
 	return true;

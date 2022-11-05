@@ -314,7 +314,7 @@ const std::map <std::string, std::string> StringTables::instructionMessage = {
 	// exponent, logarithm
 	{ "OP_SQ", "SQUARE" },
 	{ "OP_SQRT", "SQUARE ROOT" },
-	{ "OP_CBRT", "CUBIC ROOT" },
+	{ "OP_CBRT", "CUBE ROOT" },
 	{ "OP_POW", "POWER Y^X" },
 	{ "OP_NRT", "N-th ROOT" },
 	{ "OP_EXP", "NATURAL EXPONENT" },
